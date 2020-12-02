@@ -6,7 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { QuarterType, ToastService } from '../core';
 // import { QuarterTypeModule } from './quarter-types.module';
 
-const api = '/api';
+const api = 'https://localhost:44324/api';
 
 @Injectable({ providedIn: 'root' })
 export class QuarterTypeService {
@@ -38,7 +38,7 @@ export class QuarterTypeService {
 
   delete(quarterType: QuarterType) {
     return this.http
-      .delete(`${api}/hr/quarterType/${quarterType.id}`)
+      .delete(`${api}/hr/quarterTypes/${quarterType.id}`)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`QuarterType ${quarterType.description} deleted`, 'DELETE')
@@ -48,7 +48,7 @@ export class QuarterTypeService {
 
   add(quarterType: QuarterType) {
     return this.http
-      .post<QuarterType>(`${api}/hr/quarterType/`, quarterType)
+      .post<QuarterType>(`${api}/hr/quarterTypes/`, quarterType)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`QuarterType ${quarterType.description} added`, 'POST')
@@ -58,7 +58,7 @@ export class QuarterTypeService {
 
   update(quarterType: QuarterType) {
     return this.http
-      .put<QuarterType>(`${api}/hr/quarterType/${quarterType.id}`, quarterType)
+      .put<QuarterType>(`${api}/hr/quarterTypes/${quarterType.id}`, quarterType)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`QuarterType ${quarterType.description} updated`, 'PUT')

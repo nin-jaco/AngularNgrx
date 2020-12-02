@@ -6,7 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { CoreBehaviourType, ToastService } from '../core';
 // import { CoreBehaviourTypesModule } from './coreBehaviourTypes.module';
 
-const api = '/api/hr';
+const api = 'https://localhost:44324/api';
 
 @Injectable({ providedIn: 'root' })
 export class CoreBehaviourTypeService {
@@ -21,7 +21,7 @@ export class CoreBehaviourTypeService {
   }
 
   getAll() {
-    const url = `${api}/corebehaviourtypes`;
+    const url = `${api}/hr/corebehaviourtypes`;
     const msg = 'CoreBehaviourTypes retrieved successfully!';
     return this.http
       .get<CoreBehaviourType[]>(url)
@@ -38,7 +38,7 @@ export class CoreBehaviourTypeService {
 
   delete(coreBehaviourType: CoreBehaviourType) {
     return this.http
-      .delete(`${api}/corebehaviourtypes/${coreBehaviourType.id}`)
+      .delete(`${api}/hr/corebehaviourtypes/${coreBehaviourType.id}`)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`CoreBehaviourType ${coreBehaviourType.name} deleted`, 'DELETE')
@@ -48,7 +48,7 @@ export class CoreBehaviourTypeService {
 
   add(coreBehaviourType: CoreBehaviourType) {
     return this.http
-      .post<CoreBehaviourType>(`${api}/corebehaviourtypes/`, coreBehaviourType)
+      .post<CoreBehaviourType>(`${api}/hr/corebehaviourtypes/`, coreBehaviourType)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`CoreBehaviourType ${coreBehaviourType.name} added`, 'POST')
@@ -58,7 +58,7 @@ export class CoreBehaviourTypeService {
 
   update(coreBehaviourType: CoreBehaviourType) {
     return this.http
-      .put<CoreBehaviourType>(`${api}/corebehaviourtypes/${coreBehaviourType.id}`, coreBehaviourType)
+      .put<CoreBehaviourType>(`${api}/hr/corebehaviourtypes/${coreBehaviourType.id}`, coreBehaviourType)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`CoreBehaviourType ${coreBehaviourType.name} updated`, 'PUT')

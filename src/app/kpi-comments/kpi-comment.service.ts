@@ -6,7 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { KpiComment, ToastService } from '../core';
 // import { KpiCommentsModule } from './hr/kpicomments.module';
 
-const api = '/api';
+const api = 'https://localhost:44324/api';
 
 @Injectable({ providedIn: 'root' })
 export class KpiCommentService {

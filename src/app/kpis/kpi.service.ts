@@ -6,7 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { Kpi, ToastService } from '../core';
 // import { KpisModule } from './kpis.module';
 
-const api = '/api';
+const api = 'https://localhost:44324/api';
 
 @Injectable({ providedIn: 'root' })
 export class KpiService {
@@ -38,7 +38,7 @@ export class KpiService {
 
   delete(kpi: Kpi) {
     return this.http
-      .delete(`${api}/hr/kpi/${kpi.id}`)
+      .delete(`${api}/hr/kpis/${kpi.id}`)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`Kpi ${kpi.id} deleted`, 'DELETE')
@@ -48,7 +48,7 @@ export class KpiService {
 
   add(kpi: Kpi) {
     return this.http
-      .post<Kpi>(`${api}/hr/kpi/`, kpi)
+      .post<Kpi>(`${api}/hr/kpis/`, kpi)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`Kpi ${kpi.id} added`, 'POST')
@@ -58,7 +58,7 @@ export class KpiService {
 
   update(kpi: Kpi) {
     return this.http
-      .put<Kpi>(`${api}/hr/kpi/${kpi.id}`, kpi)
+      .put<Kpi>(`${api}/hr/kpis/${kpi.id}`, kpi)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`Kpi ${kpi.id} updated`, 'PUT')

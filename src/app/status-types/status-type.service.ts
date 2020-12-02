@@ -6,7 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { StatusType, ToastService } from '../core';
 // import { StatusTypesModule } from './statusTypes.module';
 
-const api = '/api';
+const api = 'https://localhost:44324/api';
 
 @Injectable({ providedIn: 'root' })
 export class StatusTypeService {
@@ -38,7 +38,7 @@ export class StatusTypeService {
 
   delete(statusType: StatusType) {
     return this.http
-      .delete(`${api}/hr/statusType/${statusType.id}`)
+      .delete(`${api}/hr/statusTypes/${statusType.id}`)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`StatusType ${statusType.description} deleted`, 'DELETE')
@@ -48,7 +48,7 @@ export class StatusTypeService {
 
   add(statusType: StatusType) {
     return this.http
-      .post<StatusType>(`${api}/hr/statusType/`, statusType)
+      .post<StatusType>(`${api}/hr/statusTypes/`, statusType)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`StatusType ${statusType.description} added`, 'POST')
@@ -58,7 +58,7 @@ export class StatusTypeService {
 
   update(statusType: StatusType) {
     return this.http
-      .put<StatusType>(`${api}/hr/statusType/${statusType.id}`, statusType)
+      .put<StatusType>(`${api}/hr/statusTypes/${statusType.id}`, statusType)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`StatusType ${statusType.description} updated`, 'PUT')

@@ -7,16 +7,26 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'heroes' },
+  { path: '', pathMatch: 'full', redirectTo: 'periods' },
   {
-    path: 'heroes',
+    path: 'corebehaviours',
     loadChildren: () =>
-      import('app/heroes/heroes.module').then(m => m.HeroesModule)
+      import('./core-behaviours/core-behaviours.module').then(m => m.CoreBehavioursModule)
   },
   {
-    path: 'villains',
+    path: 'notes',
     loadChildren: () =>
-      import('app/villains/villains.module').then(m => m.VillainsModule)
+      import('./notes/notes.module').then(m => m.NotesModule)
+  },
+  {
+    path: 'periods',
+    loadChildren: () =>
+      import('./periods/periods.module').then(m => m.PeriodsModule)
+  },
+  {
+    path: 'goals',
+    loadChildren: () =>
+      import('./goals/goals.module').then(m => m.GoalsModule)
   }
 ];
 

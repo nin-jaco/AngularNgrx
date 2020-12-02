@@ -6,7 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { GoalStatus, ToastService } from '../core';
 // import { GoalStatusesModule } from './goalStatuses.module';
 
-const api = '/api/hr';
+const api = 'https://localhost:44324/api';
 
 @Injectable({ providedIn: 'root' })
 export class GoalStatusService {
@@ -21,7 +21,7 @@ export class GoalStatusService {
   }
 
   getAll() {
-    const url = `${api}/goalstatuses`;
+    const url = `${api}/hr/goalstatuses`;
     const msg = 'GoalStatuses retrieved successfully!';
     return this.http
       .get<GoalStatus[]>(url)
@@ -38,7 +38,7 @@ export class GoalStatusService {
 
   delete(goalStatus: GoalStatus) {
     return this.http
-      .delete(`${api}/goalstatus/${goalStatus.id}`)
+      .delete(`${api}/hr/goalstatus/${goalStatus.id}`)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`GoalStatus ${goalStatus.description} deleted`, 'DELETE')
@@ -48,7 +48,7 @@ export class GoalStatusService {
 
   add(goalStatus: GoalStatus) {
     return this.http
-      .post<GoalStatus>(`${api}/goalstatus/`, goalStatus)
+      .post<GoalStatus>(`${api}/hr/goalstatus/`, goalStatus)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`GoalStatus ${goalStatus.description} added`, 'POST')
@@ -58,7 +58,7 @@ export class GoalStatusService {
 
   update(goalStatus: GoalStatus) {
     return this.http
-      .put<GoalStatus>(`${api}/goalstatus/${goalStatus.id}`, goalStatus)
+      .put<GoalStatus>(`${api}/hr/goalstatus/${goalStatus.id}`, goalStatus)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`GoalStatus ${goalStatus.description} updated`, 'PUT')

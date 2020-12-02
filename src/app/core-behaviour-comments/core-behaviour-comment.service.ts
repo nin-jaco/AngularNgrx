@@ -7,7 +7,7 @@ import { ToastService } from '../core';
 import { CoreBehaviourComment } from '../core/model/core-behaviour-comment.model';
 
 
-const api = '/api/hr';
+const api = 'https://localhost:44324/api';
 
 @Injectable({ providedIn: 'root' })
 export class CoreBehaviourCommentService {
@@ -22,7 +22,7 @@ export class CoreBehaviourCommentService {
   }
 
   getAll() {
-    const url = `${api}/corebehaviourcomments`;
+    const url = `${api}/hr/corebehaviourcomments`;
     const msg = 'CoreBehaviourComments retrieved successfully!';
     return this.http
       .get<CoreBehaviourComment[]>(url)
@@ -39,7 +39,7 @@ export class CoreBehaviourCommentService {
 
   delete(coreBehaviourComment: CoreBehaviourComment) {
     return this.http
-      .delete(`${api}/coreBehaviourComments/${coreBehaviourComment.id}`)
+      .delete(`${api}/hr/coreBehaviourComments/${coreBehaviourComment.id}`)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`CoreBehaviourComment ${coreBehaviourComment.description} deleted`, 'DELETE')
@@ -49,7 +49,7 @@ export class CoreBehaviourCommentService {
 
   add(coreBehaviourComment: CoreBehaviourComment) {
     return this.http
-      .post<CoreBehaviourComment>(`${api}/coreBehaviourComments/`, coreBehaviourComment)
+      .post<CoreBehaviourComment>(`${api}/hr/coreBehaviourComments/`, coreBehaviourComment)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`CoreBehaviourComment ${coreBehaviourComment.description} added`, 'POST')
@@ -59,7 +59,7 @@ export class CoreBehaviourCommentService {
 
   update(coreBehaviourComment: CoreBehaviourComment) {
     return this.http
-      .put<CoreBehaviourComment>(`${api}/coreBehaviourComments/${coreBehaviourComment.id}`, coreBehaviourComment)
+      .put<CoreBehaviourComment>(`${api}/hr/coreBehaviourComments/${coreBehaviourComment.id}`, coreBehaviourComment)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`CoreBehaviourComment ${coreBehaviourComment.description} updated`, 'PUT')

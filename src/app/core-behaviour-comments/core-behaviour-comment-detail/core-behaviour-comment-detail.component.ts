@@ -10,7 +10,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CoreBehaviourComment } from 'src/app/core/model/core-behaviour-comment.model';
+import { CoreBehaviourComment } from '../../core';
 
 @Component({
   selector: 'app-Core-Behaviour-Comment-detail',

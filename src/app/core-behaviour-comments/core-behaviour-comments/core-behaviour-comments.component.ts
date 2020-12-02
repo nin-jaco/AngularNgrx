@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { CoreBehaviourComment } from 'src/app/core/model/core-behaviour-comment.model';
+import { CoreBehaviourComment } from '../../core';
 import { CoreBehaviourCommentService } from '../core-behaviour-comment.service';
 
 

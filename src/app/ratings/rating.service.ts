@@ -6,7 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { Rating, ToastService } from '../core';
 // import { RatingesModule } from './ratinges.module';
 
-const api = '/api';
+const api = 'https://localhost:44324/api';
 
 @Injectable({ providedIn: 'root' })
 export class RatingService {
@@ -38,7 +38,7 @@ export class RatingService {
 
   delete(rating: Rating) {
     return this.http
-      .delete(`${api}/hr/rating/${rating.id}`)
+      .delete(`${api}/hr/ratings/${rating.id}`)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`Rating ${rating.description} deleted`, 'DELETE')
@@ -48,7 +48,7 @@ export class RatingService {
 
   add(rating: Rating) {
     return this.http
-      .post<Rating>(`${api}/hr/rating/`, rating)
+      .post<Rating>(`${api}/hr/ratings/`, rating)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`Rating ${rating.description} added`, 'POST')
@@ -58,7 +58,7 @@ export class RatingService {
 
   update(rating: Rating) {
     return this.http
-      .put<Rating>(`${api}/hr/rating/${rating.id}`, rating)
+      .put<Rating>(`${api}/hr/ratings/${rating.id}`, rating)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`Rating ${rating.description} updated`, 'PUT')

@@ -9,7 +9,7 @@
     <div *ngIf="notes">
       <mat-spinner *ngIf="loading;else noteList" mode="indeterminate" color="accent"></mat-spinner>
       <ng-template #noteList>
-        <app-note-list [notes]="notes" [selectedHero]="selected" (deleted)="delete($event)" (selected)="select($event)"></app-note-list>
+        <app-note-list [notes]="notes" [selectedNote]="selected" (deleted)="delete($event)" (selected)="select($event)"></app-note-list>
       </ng-template>
     </div>
   </div>

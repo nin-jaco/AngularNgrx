@@ -6,7 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { Note, ToastService } from '../core';
 // import { NotesModule } from './notes.module';
 
-const api = '/api';
+const api = 'https://localhost:44324/api';
 
 @Injectable({ providedIn: 'root' })
 export class NoteService {

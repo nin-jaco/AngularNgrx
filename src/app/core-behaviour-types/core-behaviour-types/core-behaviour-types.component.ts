@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { CoreBehaviourTypeService } from 'src/app/core-behaviour-types/core-behaviour-type.service';
 import { CoreBehaviourType } from '../../core';
+import { CoreBehaviourTypeService } from '../core-behaviour-type.service';
 
 @Component({
   selector: 'app-core-behaviour-types',

@@ -9,7 +9,7 @@
     <div *ngIf="periods">
       <mat-spinner *ngIf="loading;else periodList" mode="indeterminate" color="accent"></mat-spinner>
       <ng-template #periodList>
-        <app-period-list [periods]="periods" [selectedHero]="selected" (deleted)="delete($event)" (selected)="select($event)"></app-period-list>
+        <app-period-list [periods]="periods" [selectedPeriod]="selected" (deleted)="delete($event)" (selected)="select($event)"></app-period-list>
       </ng-template>
     </div>
   </div>

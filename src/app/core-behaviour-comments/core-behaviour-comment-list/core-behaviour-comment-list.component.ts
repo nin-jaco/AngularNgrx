@@ -6,8 +6,7 @@ import {
   Output
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { CoreBehaviourComment } from 'src/app/core/model/core-behaviour-comment.model';
-import { ModalComponent } from '../../core';
+import { CoreBehaviourComment, ModalComponent } from '../../core';
 
 @Component({
   selector: 'app-Core-Behaviour-Comment-list',

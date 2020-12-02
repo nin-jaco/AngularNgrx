@@ -6,7 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { Period, ToastService } from '../core';
 // import { PeriodsModule } from './periods.module';
 
-const api = '/api';
+const api = 'https://localhost:44324/api';
 
 @Injectable({ providedIn: 'root' })
 export class PeriodService {
@@ -21,7 +21,7 @@ export class PeriodService {
   }
 
   getAll() {
-    const url = `${api}/periods`;
+    const url = `${api}/hr/periods`;
     const msg = 'Periods retrieved successfully!';
     return this.http
       .get<Period[]>(url)
