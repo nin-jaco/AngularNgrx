@@ -10,19 +10,19 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Hero } from '../../core';
+import { CoreBehaviour } from '../../core';
 
 @Component({
-  selector: 'app-hero-detail',
-  templateUrl: './hero-detail.component.html',
-  styleUrls: ['./hero-detail.component.scss'],
+  selector: 'app-core-behaviour-detail',
+  templateUrl: './core-behaviour-detail.component.html',
+  styleUrls: ['./core-behaviour-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeroDetailComponent implements OnChanges {
-  @Input() hero: Hero;
+export class CoreBehaviourDetailComponent implements OnChanges {
+  @Input() coreBehaviour: CoreBehaviour;
   @Output() unselect = new EventEmitter<string>();
-  @Output() add = new EventEmitter<Hero>();
-  @Output() update = new EventEmitter<Hero>();
+  @Output() add = new EventEmitter<CoreBehaviour>();
+  @Output() update = new EventEmitter<CoreBehaviour>();
 
   @ViewChild('name', { static: true }) nameElement: ElementRef;
 
@@ -38,8 +38,8 @@ export class HeroDetailComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     this.setFocus();
-    if (this.hero && this.hero.id) {
-      this.form.patchValue(this.hero);
+    if (this.coreBehaviour && this.coreBehaviour.id) {
+      this.form.patchValue(this.coreBehaviour);
       this.addMode = false;
     } else {
       this.form.reset();
@@ -47,10 +47,10 @@ export class HeroDetailComponent implements OnChanges {
     }
   }
 
-  addHero(form: FormGroup) {
+  addCoreBehaviour(form: FormGroup) {
     const { value, valid, touched } = form;
     if (touched && valid) {
-      this.add.emit({ ...this.hero, ...value });
+      this.add.emit({ ...this.coreBehaviour, ...value });
     }
     this.close();
   }
@@ -59,11 +59,11 @@ export class HeroDetailComponent implements OnChanges {
     this.unselect.emit();
   }
 
-  saveHero(form: FormGroup) {
+  saveCoreBehaviour(form: FormGroup) {
     if (this.addMode) {
-      this.addHero(form);
+      this.addCoreBehaviour(form);
     } else {
-      this.updateHero(form);
+      this.updateCoreBehaviour(form);
     }
   }
 
@@ -71,10 +71,10 @@ export class HeroDetailComponent implements OnChanges {
     this.nameElement.nativeElement.focus();
   }
 
-  updateHero(form: FormGroup) {
+  updateCoreBehaviour(form: FormGroup) {
     const { value, valid, touched } = form;
     if (touched && valid) {
-      this.update.emit({ ...this.hero, ...value });
+      this.update.emit({ ...this.coreBehaviour, ...value });
     }
     this.close();
   }

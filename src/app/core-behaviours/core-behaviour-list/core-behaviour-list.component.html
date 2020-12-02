@@ -1,0 +1,21 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>CoreBehaviours</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ul class="coreBehaviours">
+      <li *ngFor="let coreBehaviour of coreBehaviours; trackBy: byId" class="item-container">
+        <button mat-button mat-suffix mat-icon-button color="accent" class="delete-button" aria-label="Delete" (click)="deleteCoreBehaviour(coreBehaviour)"
+          matTooltip="Delete the coreBehaviour">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <div class="selectable-item" [class.selected]="coreBehaviour === selectedCoreBehaviour" (click)="select(coreBehaviour)">
+          <div class="badge">{{coreBehaviour.id}}</div>
+          <div class="item-text">
+            <div class="name">{{coreBehaviour.name}}</div>            
+          </div>
+        </div>
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>

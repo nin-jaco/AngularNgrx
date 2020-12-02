@@ -15,12 +15,6 @@
             <input matInput formControlName="description" placeholder="description" #name (keyup.esc)="close()" (keyup.enter)="saveCoreBehaviourComment(form)">
           </mat-form-field>
         </div>
-        <div>
-          <mat-form-field>
-            <textarea matInput formControlName="saying" placeholder="saying" #saying (keyup.esc)="close()"
-              (keyup.enter)="saveCoreBehaviourComment(form)"></textarea>
-          </mat-form-field>
-        </div>
       </div>
       <button mat-raised-button color="accent" type="button" (click)="close()" matTooltip="Cancel all changes">Cancel</button>
       <button mat-raised-button color="primary" type="submit" [disabled]="form.pristine || form.invalid" matTooltip="Save all changes">Save</button>

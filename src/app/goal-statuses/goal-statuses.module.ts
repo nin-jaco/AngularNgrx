@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
-import { HeroDetailComponent } from './hero-detail/hero-detail.component';
-import { HeroListComponent } from './hero-list/hero-list.component';
-import { HeroService } from './hero.service';
-import { HeroesComponent } from './heroes/heroes.component';
+import { GoalStatusDetailComponent } from './goal-status-detail/goal-status-detail.component';
+import { GoalStatusListComponent } from './goal-status-list/goal-status-list.component';
+import { GoalStatusService } from './goal-status.service';
+import { GoalStatusesComponent } from './goal-statuses/goal-statuses.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: HeroesComponent }
+  { path: '', pathMatch: 'full', component: GoalStatusesComponent }
 ];
 
 @NgModule({
@@ -19,8 +19,8 @@ const routes: Routes = [
     MaterialModule,
     RouterModule.forChild(routes)
   ],
-  exports: [HeroesComponent, HeroDetailComponent],
-  declarations: [HeroesComponent, HeroDetailComponent, HeroListComponent],
-  providers: [HeroService]
+  exports: [GoalStatusesComponent, GoalStatusDetailComponent],
+  declarations: [GoalStatusesComponent, GoalStatusDetailComponent, GoalStatusListComponent],
+  providers: [GoalStatusService]
 })
-export class HeroesModule {}
+export class GoalStatusesModule {}

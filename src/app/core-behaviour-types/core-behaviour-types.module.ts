@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
-import { HeroDetailComponent } from './hero-detail/hero-detail.component';
-import { HeroListComponent } from './hero-list/hero-list.component';
-import { HeroService } from './hero.service';
-import { HeroesComponent } from './heroes/heroes.component';
+import { CoreBehaviourTypeDetailComponent } from './core-behaviour-type-detail/core-behaviour-type-detail.component';
+import { CoreBehaviourTypeListComponent } from './core-behaviour-type-list/core-behaviour-type-list.component';
+import { CoreBehaviourTypeService } from './core-behaviour-type.service';
+import { CoreBehaviourTypesComponent } from './core-behaviour-types/core-behaviour-types.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: HeroesComponent }
+  { path: '', pathMatch: 'full', component: CoreBehaviourTypesComponent }
 ];
 
 @NgModule({
@@ -19,8 +19,8 @@ const routes: Routes = [
     MaterialModule,
     RouterModule.forChild(routes)
   ],
-  exports: [HeroesComponent, HeroDetailComponent],
-  declarations: [HeroesComponent, HeroDetailComponent, HeroListComponent],
-  providers: [HeroService]
+  exports: [CoreBehaviourTypesComponent, CoreBehaviourTypeDetailComponent],
+  declarations: [CoreBehaviourTypesComponent, CoreBehaviourTypeDetailComponent, CoreBehaviourTypeListComponent],
+  providers: [CoreBehaviourTypeService]
 })
-export class HeroesModule {}
+export class CoreBehaviourTypesModule {}

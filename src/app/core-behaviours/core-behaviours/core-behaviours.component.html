@@ -1,0 +1,20 @@
+<div class="control-panel">
+  <div class="button-panel">
+    <button mat-raised-button color="primary" type="button" (click)="getCoreBehaviours()" matTooltip="Refresh the coreBehaviours">Refresh</button>
+    <button mat-raised-button color="primary" type="button" (click)="enableAddMode()" *ngIf="!selected" matTooltip="Add a new coreBehaviour">Add</button>
+  </div>
+</div>
+<div class="content-container">
+  <div class="list-container">
+    <div *ngIf="coreBehaviours">
+      <mat-spinner *ngIf="loading;else coreBehaviourList" mode="indeterminate" color="accent"></mat-spinner>
+      <ng-template #coreBehaviourList>
+        <app-core-behaviour-list [coreBehaviours]="coreBehaviours" [selectedCoreBehaviour]="selected" (deleted)="delete($event)" (selected)="select($event)"></app-core-behaviour-list>
+      </ng-template>
+    </div>
+  </div>
+  <div class="detail-container">
+    <app-core-behaviour-detail *ngIf="selected" [coreBehaviour]="selected" (unselect)="close()" (add)="add($event)" (update)="update($event)">
+    </app-core-behaviour-detail>
+  </div>
+</div>

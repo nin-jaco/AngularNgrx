@@ -10,19 +10,19 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Hero } from '../../core';
+import { GoalStatus } from '../../core';
 
 @Component({
-  selector: 'app-hero-detail',
-  templateUrl: './hero-detail.component.html',
-  styleUrls: ['./hero-detail.component.scss'],
+  selector: 'app-goal-status-detail',
+  templateUrl: './goal-status-detail.component.html',
+  styleUrls: ['./goal-status-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeroDetailComponent implements OnChanges {
-  @Input() hero: Hero;
+export class GoalStatusDetailComponent implements OnChanges {
+  @Input() goalStatus: GoalStatus;
   @Output() unselect = new EventEmitter<string>();
-  @Output() add = new EventEmitter<Hero>();
-  @Output() update = new EventEmitter<Hero>();
+  @Output() add = new EventEmitter<GoalStatus>();
+  @Output() update = new EventEmitter<GoalStatus>();
 
   @ViewChild('name', { static: true }) nameElement: ElementRef;
 
@@ -38,8 +38,8 @@ export class HeroDetailComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     this.setFocus();
-    if (this.hero && this.hero.id) {
-      this.form.patchValue(this.hero);
+    if (this.goalStatus && this.goalStatus.id) {
+      this.form.patchValue(this.goalStatus);
       this.addMode = false;
     } else {
       this.form.reset();
@@ -47,10 +47,10 @@ export class HeroDetailComponent implements OnChanges {
     }
   }
 
-  addHero(form: FormGroup) {
+  addGoalStatus(form: FormGroup) {
     const { value, valid, touched } = form;
     if (touched && valid) {
-      this.add.emit({ ...this.hero, ...value });
+      this.add.emit({ ...this.goalStatus, ...value });
     }
     this.close();
   }
@@ -59,11 +59,11 @@ export class HeroDetailComponent implements OnChanges {
     this.unselect.emit();
   }
 
-  saveHero(form: FormGroup) {
+  saveGoalStatus(form: FormGroup) {
     if (this.addMode) {
-      this.addHero(form);
+      this.addGoalStatus(form);
     } else {
-      this.updateHero(form);
+      this.updateGoalStatus(form);
     }
   }
 
@@ -71,10 +71,10 @@ export class HeroDetailComponent implements OnChanges {
     this.nameElement.nativeElement.focus();
   }
 
-  updateHero(form: FormGroup) {
+  updateGoalStatus(form: FormGroup) {
     const { value, valid, touched } = form;
     if (touched && valid) {
-      this.update.emit({ ...this.hero, ...value });
+      this.update.emit({ ...this.goalStatus, ...value });
     }
     this.close();
   }

@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { throwError as observableThrowError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { Hero, ToastService } from '../core';
-// import { HeroesModule } from './heroes.module';
+import { CoreBehaviour, ToastService } from '../core';
+// import { CoreBehavioursModule } from './coreBehaviours.module';
 
-const api = '/api';
+const api = '/api/hr';
 
 @Injectable({ providedIn: 'root' })
-export class HeroService {
+export class CoreBehaviourService {
   constructor(private http: HttpClient, private toastService: ToastService) {}
 
   logout() {
@@ -21,10 +21,10 @@ export class HeroService {
   }
 
   getAll() {
-    const url = `${api}/heroes`;
-    const msg = 'Heroes retrieved successfully!';
+    const url = `${api}/corebehaviours`;
+    const msg = 'CoreBehaviours retrieved successfully!';
     return this.http
-      .get<Hero[]>(url)
+      .get<CoreBehaviour[]>(url)
       .pipe(
         tap(() => this.toastService.openSnackBar(msg, 'GET')),
         catchError(this.handleError)
@@ -36,32 +36,32 @@ export class HeroService {
     return observableThrowError(res.error || 'Server error');
   }
 
-  delete(hero: Hero) {
+  delete(coreBehaviour: CoreBehaviour) {
     return this.http
-      .delete(`${api}/hero/${hero.id}`)
+      .delete(`${api}/corebehaviours/${coreBehaviour.id}`)
       .pipe(
         tap(() =>
-          this.toastService.openSnackBar(`Hero ${hero.name} deleted`, 'DELETE')
+          this.toastService.openSnackBar(`CoreBehaviour ${coreBehaviour.id} deleted`, 'DELETE')
         )
       );
   }
 
-  add(hero: Hero) {
+  add(coreBehaviour: CoreBehaviour) {
     return this.http
-      .post<Hero>(`${api}/hero/`, hero)
+      .post<CoreBehaviour>(`${api}/corebehaviours/`, coreBehaviour)
       .pipe(
         tap(() =>
-          this.toastService.openSnackBar(`Hero ${hero.name} added`, 'POST')
+          this.toastService.openSnackBar(`CoreBehaviour ${coreBehaviour.id} added`, 'POST')
         )
       );
   }
 
-  update(hero: Hero) {
+  update(coreBehaviour: CoreBehaviour) {
     return this.http
-      .put<Hero>(`${api}/hero/${hero.id}`, hero)
+      .put<CoreBehaviour>(`${api}/corebehaviours/${coreBehaviour.id}`, coreBehaviour)
       .pipe(
         tap(() =>
-          this.toastService.openSnackBar(`Hero ${hero.name} updated`, 'PUT')
+          this.toastService.openSnackBar(`CoreBehaviour ${coreBehaviour.id} updated`, 'PUT')
         )
       );
   }

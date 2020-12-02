@@ -1,9 +1,9 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Hero Details</mat-card-title>
+    <mat-card-title>CoreBehaviourType Details</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form [formGroup]="form" (ngSubmit)="saveHero(form)">
+    <form [formGroup]="form" (ngSubmit)="saveCoreBehaviourType(form)">
       <div class="editfields">
         <div [hidden]="addMode">
           <mat-form-field>
@@ -12,13 +12,13 @@
         </div>
         <div>
           <mat-form-field>
-            <input matInput formControlName="name" placeholder="name" #name (keyup.esc)="close()" (keyup.enter)="saveHero(form)">
+            <input matInput formControlName="name" placeholder="name" #name (keyup.esc)="close()" (keyup.enter)="saveCoreBehaviourType(form)">
           </mat-form-field>
         </div>
         <div>
           <mat-form-field>
-            <textarea matInput formControlName="saying" placeholder="saying" #saying (keyup.esc)="close()"
-              (keyup.enter)="saveHero(form)"></textarea>
+            <textarea matInput formControlName="description" placeholder="description" #description (keyup.esc)="close()"
+              (keyup.enter)="saveCoreBehaviourType(form)"></textarea>
           </mat-form-field>
         </div>
       </div>

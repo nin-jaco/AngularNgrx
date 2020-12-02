@@ -1,0 +1,22 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>GoalStatuses</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ul class="goalStatuses">
+      <li *ngFor="let goalStatus of goalStatuses; trackBy: byId" class="item-container">
+        <button mat-button mat-suffix mat-icon-button color="accent" class="delete-button" aria-label="Delete" (click)="deleteGoalStatus(goalStatus)"
+          matTooltip="Delete the goalStatus">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <div class="selectable-item" [class.selected]="goalStatus === selectedGoalStatus" (click)="select(goalStatus)">
+          <div class="badge">{{goalStatus.id}}</div>
+          <div class="item-text">
+            <div class="name">{{goalStatus.name}}</div>
+            <div class="saying">{{goalStatus.saying}}</div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>

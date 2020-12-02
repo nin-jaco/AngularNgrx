@@ -1,6 +1,9 @@
 @import '../../../styles/mixin';
 
+.goalStatuses {
+  @include item-list;
+}
+
 .mat-card {
   @include mat-card-layout;
-  @include editarea-margins;
 }
