@@ -1,0 +1,21 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Ratings</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ul class="ratings">
+      <li *ngFor="let rating of ratings; trackBy: byId" class="item-container">
+        <button mat-button mat-suffix mat-icon-button color="accent" class="delete-button" aria-label="Delete" (click)="deleteRating(rating)"
+          matTooltip="Delete the rating">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <div class="selectable-item" [class.selected]="rating === selectedRating" (click)="select(rating)">
+          <div class="badge">{{rating.id}}</div>
+          <div class="item-text">
+            <div class="name">{{rating.description}}</div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,20 @@
+<div class="control-panel">
+  <div class="button-panel">
+    <button mat-raised-button color="primary" type="button" (click)="getRatings()" matTooltip="Refresh the ratings">Refresh</button>
+    <button mat-raised-button color="primary" type="button" (click)="enableAddMode()" *ngIf="!selected" matTooltip="Add a new rating">Add</button>
+  </div>
+</div>
+<div class="content-container">
+  <div class="list-container">
+    <div *ngIf="ratings">
+      <mat-spinner *ngIf="loading;else ratingList" mode="indeterminate" color="accent"></mat-spinner>
+      <ng-template #ratingList>
+        <app-rating-list [ratinges]="ratings" [selectedHero]="selected" (deleted)="delete($event)" (selected)="select($event)"></app-rating-list>
+      </ng-template>
+    </div>
+  </div>
+  <div class="detail-container">
+    <app-rating-detail *ngIf="selected" [rating]="selected" (unselect)="close()" (add)="add($event)" (update)="update($event)">
+    </app-rating-detail>
+  </div>
+</div>

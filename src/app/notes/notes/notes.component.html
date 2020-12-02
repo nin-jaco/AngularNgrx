@@ -1,0 +1,20 @@
+<div class="control-panel">
+  <div class="button-panel">
+    <button mat-raised-button color="primary" type="button" (click)="getNotes()" matTooltip="Refresh the notes">Refresh</button>
+    <button mat-raised-button color="primary" type="button" (click)="enableAddMode()" *ngIf="!selected" matTooltip="Add a new note">Add</button>
+  </div>
+</div>
+<div class="content-container">
+  <div class="list-container">
+    <div *ngIf="notes">
+      <mat-spinner *ngIf="loading;else noteList" mode="indeterminate" color="accent"></mat-spinner>
+      <ng-template #noteList>
+        <app-note-list [notes]="notes" [selectedHero]="selected" (deleted)="delete($event)" (selected)="select($event)"></app-note-list>
+      </ng-template>
+    </div>
+  </div>
+  <div class="detail-container">
+    <app-note-detail *ngIf="selected" [note]="selected" (unselect)="close()" (add)="add($event)" (update)="update($event)">
+    </app-note-detail>
+  </div>
+</div>

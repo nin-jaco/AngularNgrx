@@ -1,0 +1,21 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Notees</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ul class="notes">
+      <li *ngFor="let note of notes; trackBy: byId" class="item-container">
+        <button mat-button mat-suffix mat-icon-button color="accent" class="delete-button" aria-label="Delete" (click)="deleteNote(note)"
+          matTooltip="Delete the note">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <div class="selectable-item" [class.selected]="note === selectedNote" (click)="select(note)">
+          <div class="badge">{{note.id}}</div>
+          <div class="item-text">
+            <div class="name">{{note.name}}</div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>
