@@ -1,0 +1,20 @@
+<div class="control-panel">
+  <div class="button-panel">
+    <button mat-raised-button color="primary" type="button" (click)="getGoals()" matTooltip="Refresh the goals">Refresh</button>
+    <button mat-raised-button color="primary" type="button" (click)="enableAddMode()" *ngIf="!selected" matTooltip="Add a new goal">Add</button>
+  </div>
+</div>
+<div class="content-container">
+  <div class="list-container">
+    <div *ngIf="goals">
+      <mat-spinner *ngIf="loading;else goalList" mode="indeterminate" color="accent"></mat-spinner>
+      <ng-template #goalList>
+        <app-goal-list [goals]="goals" [selectedGoal]="selected" (deleted)="delete($event)" (selected)="select($event)"></app-goal-list>
+      </ng-template>
+    </div>
+  </div>
+  <div class="detail-container">
+    <app-goal-detail *ngIf="selected" [goal]="selected" (unselect)="close()" (add)="add($event)" (update)="update($event)">
+    </app-goal-detail>
+  </div>
+</div>

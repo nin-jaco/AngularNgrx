@@ -6,38 +6,38 @@ import {
   Output
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Hero, ModalComponent } from '../../core';
+import { Goal, ModalComponent } from '../../core';
 
 @Component({
-  selector: 'app-hero-list',
-  templateUrl: './hero-list.component.html',
-  styleUrls: ['./hero-list.component.scss'],
+  selector: 'app-goal-list',
+  templateUrl: './goal-list.component.html',
+  styleUrls: ['./goal-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeroListComponent {
-  @Input() heroes: Hero[];
-  @Input() selectedHero: Hero;
-  @Output() deleted = new EventEmitter<Hero>();
-  @Output() selected = new EventEmitter<Hero>();
+export class GoalListComponent {
+  @Input() goals: Goal[];
+  @Input() selectedGoal: Goal;
+  @Output() deleted = new EventEmitter<Goal>();
+  @Output() selected = new EventEmitter<Goal>();
 
   constructor(public dialog: MatDialog) {}
 
-  byId(hero: Hero) {
-    return hero.id;
+  byId(goal: Goal) {
+    return goal.id;
   }
 
-  select(hero: Hero) {
-    this.selected.emit(hero);
+  select(goal: Goal) {
+    this.selected.emit(goal);
   }
 
-  deleteHero(hero: Hero) {
+  deleteGoal(goal: Goal) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '250px';
     dialogConfig.data = {
-      title: 'Delete Hero',
-      message: `Do you want to delete ${hero.name}`
+      title: 'Delete Goal',
+      message: `Do you want to delete ${goal.id}`
     };
 
     const dialogRef = this.dialog.open(ModalComponent, dialogConfig);
@@ -45,7 +45,7 @@ export class HeroListComponent {
     dialogRef.afterClosed().subscribe(deleteIt => {
       console.log('The dialog was closed');
       if (deleteIt) {
-        this.deleted.emit(hero);
+        this.deleted.emit(goal);
       }
     });
   }

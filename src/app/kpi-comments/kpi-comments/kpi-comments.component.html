@@ -1,0 +1,20 @@
+<div class="control-panel">
+  <div class="button-panel">
+    <button mat-raised-button color="primary" type="button" (click)="getKpiComments()" matTooltip="Refresh the kpiComments">Refresh</button>
+    <button mat-raised-button color="primary" type="button" (click)="enableAddMode()" *ngIf="!selected" matTooltip="Add a new kpiComment">Add</button>
+  </div>
+</div>
+<div class="content-container">
+  <div class="list-container">
+    <div *ngIf="kpiComments">
+      <mat-spinner *ngIf="loading;else kpiCommentList" mode="indeterminate" color="accent"></mat-spinner>
+      <ng-template #kpiCommentList>
+        <app-kpi-comment-list [kpiComments]="kpiComments" [selectedKpiComment]="selected" (deleted)="delete($event)" (selected)="select($event)"></app-kpi-comment-list>
+      </ng-template>
+    </div>
+  </div>
+  <div class="detail-container">
+    <app-kpi-comment-detail *ngIf="selected" [kpiComment]="selected" (unselect)="close()" (add)="add($event)" (update)="update($event)">
+    </app-kpi-comment-detail>
+  </div>
+</div>

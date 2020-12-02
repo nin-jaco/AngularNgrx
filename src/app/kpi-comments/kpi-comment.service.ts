@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { throwError as observableThrowError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { Hero, ToastService } from '../core';
-// import { HeroesModule } from './heroes.module';
+import { KpiComment, ToastService } from '../core';
+// import { KpiCommentsModule } from './hr/kpicomments.module';
 
 const api = '/api';
 
 @Injectable({ providedIn: 'root' })
-export class HeroService {
+export class KpiCommentService {
   constructor(private http: HttpClient, private toastService: ToastService) {}
 
   logout() {
@@ -21,10 +21,10 @@ export class HeroService {
   }
 
   getAll() {
-    const url = `${api}/heroes`;
-    const msg = 'Heroes retrieved successfully!';
+    const url = `${api}/hr/kpicomments`;
+    const msg = 'KpiComments retrieved successfully!';
     return this.http
-      .get<Hero[]>(url)
+      .get<KpiComment[]>(url)
       .pipe(
         tap(() => this.toastService.openSnackBar(msg, 'GET')),
         catchError(this.handleError)
@@ -36,32 +36,32 @@ export class HeroService {
     return observableThrowError(res.error || 'Server error');
   }
 
-  delete(hero: Hero) {
+  delete(kpiComment: KpiComment) {
     return this.http
-      .delete(`${api}/hero/${hero.id}`)
+      .delete(`${api}/hr/kpicomments/${kpiComment.id}`)
       .pipe(
         tap(() =>
-          this.toastService.openSnackBar(`Hero ${hero.name} deleted`, 'DELETE')
+          this.toastService.openSnackBar(`KpiComment ${kpiComment.description} deleted`, 'DELETE')
         )
       );
   }
 
-  add(hero: Hero) {
+  add(kpiComment: KpiComment) {
     return this.http
-      .post<Hero>(`${api}/hero/`, hero)
+      .post<KpiComment>(`${api}/hr/kpicomments/`, kpiComment)
       .pipe(
         tap(() =>
-          this.toastService.openSnackBar(`Hero ${hero.name} added`, 'POST')
+          this.toastService.openSnackBar(`KpiComment ${kpiComment.description} added`, 'POST')
         )
       );
   }
 
-  update(hero: Hero) {
+  update(kpiComment: KpiComment) {
     return this.http
-      .put<Hero>(`${api}/hero/${hero.id}`, hero)
+      .put<KpiComment>(`${api}/hr/kpicomments/${kpiComment.id}`, kpiComment)
       .pipe(
         tap(() =>
-          this.toastService.openSnackBar(`Hero ${hero.name} updated`, 'PUT')
+          this.toastService.openSnackBar(`KpiComment ${kpiComment.description} updated`, 'PUT')
         )
       );
   }

@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
-import { HeroDetailComponent } from './hero-detail/hero-detail.component';
-import { HeroListComponent } from './hero-list/hero-list.component';
-import { HeroService } from './hero.service';
-import { HeroesComponent } from './heroes/heroes.component';
+import { KpiCommentDetailComponent } from './kpi-comment-detail/kpi-comment-detail.component';
+import { KpiCommentListComponent } from './kpi-comment-list/kpi-comment-list.component';
+import { KpiCommentService } from './kpi-comment.service';
+import { KpiCommentsComponent } from './kpi-comments/kpi-comments.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: HeroesComponent }
+  { path: '', pathMatch: 'full', component: KpiCommentsComponent }
 ];
 
 @NgModule({
@@ -19,8 +19,8 @@ const routes: Routes = [
     MaterialModule,
     RouterModule.forChild(routes)
   ],
-  exports: [HeroesComponent, HeroDetailComponent],
-  declarations: [HeroesComponent, HeroDetailComponent, HeroListComponent],
-  providers: [HeroService]
+  exports: [KpiCommentsComponent, KpiCommentDetailComponent],
+  declarations: [KpiCommentsComponent, KpiCommentDetailComponent, KpiCommentListComponent],
+  providers: [KpiCommentService]
 })
-export class HeroesModule {}
+export class KpiCommentsModule {}
