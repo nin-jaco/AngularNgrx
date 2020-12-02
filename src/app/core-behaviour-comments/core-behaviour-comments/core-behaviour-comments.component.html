@@ -1,0 +1,20 @@
+<div class="control-panel">
+  <div class="button-panel">
+    <button mat-raised-button color="primary" type="button" (click)="getCoreBehaviourComments()" matTooltip="Refresh the view">Refresh</button>
+    <button mat-raised-button color="primary" type="button" (click)="enableAddMode()" *ngIf="!selected" matTooltip="Add a new item">Add</button>
+  </div>
+</div>
+<div class="content-container">
+  <div class="list-container">
+    <div *ngIf="coreBehaviourComments">
+      <mat-spinner *ngIf="loading;else coreBehaviourCommentList" mode="indeterminate" color="accent"></mat-spinner>
+      <ng-template #coreBehaviourCommentList>
+        <app-Core-Behaviour-Comment-list [coreBehaviourComments]="coreBehaviourComments" [selectedCoreBehaviourComment]="selected" (deleted)="delete($event)" (selected)="select($event)"></app-Core-Behaviour-Comment-list>
+      </ng-template>
+    </div>
+  </div>
+  <div class="detail-container">
+    <app-Core-Behaviour-Comment-detail *ngIf="selected" [hero]="selected" (unselect)="close()" (add)="add($event)" (update)="update($event)">
+    </app-Core-Behaviour-Comment-detail>
+  </div>
+</div>

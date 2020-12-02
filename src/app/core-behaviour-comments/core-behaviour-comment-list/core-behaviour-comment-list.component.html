@@ -1,0 +1,21 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Core Behaviour Comments</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ul class="coreBehaviourComments">
+      <li *ngFor="let coreBehaviourComment of coreBehaviourComments; trackBy: byId" class="item-container">
+        <button mat-button mat-suffix mat-icon-button color="accent" class="delete-button" aria-label="Delete" (click)="deleteCoreBehaviourComment(coreBehaviourComment)"
+          matTooltip="Delete the Item">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <div class="selectable-item" [class.selected]="coreBehaviourComment === selectedCoreBehaviourComment" (click)="select(coreBehaviourComment)">
+          <div class="badge">{{coreBehaviourComment.id}}</div>
+          <div class="item-text">
+            <div class="name">{{coreBehaviourComment.description}}</div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>
