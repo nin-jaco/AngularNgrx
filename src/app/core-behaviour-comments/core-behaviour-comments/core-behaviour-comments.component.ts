@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { CoreBehaviourComment } from '../../core';
 import { CoreBehaviourCommentService } from '../core-behaviour-comment.service';
@@ -11,15 +12,40 @@ import { CoreBehaviourCommentService } from '../core-behaviour-comment.service';
 })
 export class CoreBehaviourCommentsComponent implements OnInit {
   selected: CoreBehaviourComment;
-  coreBehaviourComments: CoreBehaviourComment[];
-  loading: boolean;
+  coreBehaviourComments$: Observable<CoreBehaviourComment[]>;
+  loading$: Observable<boolean>;
 
-  constructor(private coreBehaviourCommentService: CoreBehaviourCommentService) {}
-
-  ngOnInit() {
-    this.getCoreBehaviourCommentes();
+  constructor(private coreBehaviourCommentService: CoreBehaviourCommentService) {
+    this.coreBehaviourComments$ = coreBehaviourCommentService.entities$;
+    this.loading$ = coreBehaviourCommentService.loading$;
   }
 
+  ngOnInit() {
+    this.getAll();
+  }
+
+  add(coreBehaviourComment: CoreBehaviourComment) {
+    this.coreBehaviourCommentService.add(coreBehaviourComment);
+  }
+  
+  delete(coreBehaviourComment: CoreBehaviourComment) {
+    this.coreBehaviourCommentService.delete(coreBehaviourComment);
+    this.close();
+  }
+  
+  getAll() {
+    this.coreBehaviourCommentService.getAll();
+    this.close();
+  }
+  
+  update(coreBehaviourComment: CoreBehaviourComment) {
+    this.coreBehaviourCommentService.update(coreBehaviourComment);
+  }
+
+  close() {
+    this.selected = null;
+  }
+/*
   add(coreBehaviourComment: CoreBehaviourComment) {
     this.loading = true;
     this.coreBehaviourCommentService
@@ -47,12 +73,12 @@ export class CoreBehaviourCommentsComponent implements OnInit {
     this.selected = <any>{};
   }
 
-  getCoreBehaviourCommentes() {
+  getCoreBehaviourComments() {
     this.loading = true;
     this.coreBehaviourCommentService
       .getAll()
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe(coreBehaviourCommentes => (this.coreBehaviourComments = coreBehaviourCommentes));
+      .subscribe(coreBehaviourComments => (this.coreBehaviourComments = coreBehaviourComments));
     this.close();
   }
 
@@ -69,5 +95,5 @@ export class CoreBehaviourCommentsComponent implements OnInit {
         () =>
           (this.coreBehaviourComments = this.coreBehaviourComments.map(h => (h.id === coreBehaviourComment.id ? coreBehaviourComment : h)))
       );
-  }
+  }*/
 }
