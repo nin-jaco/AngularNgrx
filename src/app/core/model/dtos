@@ -1,0 +1,2376 @@
+/* Options:
+Date: 2020-12-04 01:55:08
+Version: 5,60
+Tip: To override a DTO option, remove "//" prefix before updating
+BaseUrl: https://localhost:44324/api
+
+//GlobalNamespace: 
+//AddServiceStackTypes: True
+//AddResponseStatus: False
+//AddImplicitVersion: 
+//AddDescriptionAsComments: True
+//IncludeTypes: 
+//ExcludeTypes: 
+//DefaultImports: 
+*/
+
+/*import { AddressModel } from './AddressModel';
+import { IMessageHandlerStats } from './IMessageHandlerStats';
+import { PagedList } from './PagedList';
+import { ResponseStatus } from './ResponseStatus';
+import { TPermission } from './TPermission';
+import { TRole } from './TRole';
+import { TRolePermission } from './TRolePermission';
+import { TTenantItem } from './TTenantItem';
+import { UserAuthDetails } from './UserAuthDetails';*/
+
+
+export interface IReturn<T>
+{
+    createResponse(): T;
+}
+
+export interface IReturnVoid
+{
+    createResponse(): void;
+}
+
+export interface IHasSessionId
+{
+    sessionId: string;
+}
+
+export interface IHasBearerToken
+{
+    bearerToken: string;
+}
+
+export interface IGet
+{
+}
+
+export interface IPost
+{
+}
+
+export interface IPut
+{
+}
+
+export interface IDelete
+{
+}
+
+export interface IPageable
+{
+    page: number;
+    pageSize: number;
+}
+
+export interface ISortable
+{
+    sortDirection: string;
+    sortField: string;
+}
+
+export class TEventQueueItem extends VantageTypeBaseWithVersioning implements IVantageCoreTypeWithoutVersioning, IHasPTA, IHasCreatedBy
+{
+    public eventQueueId: number;
+    public eventTypeName: string;
+    public refId: string;
+    public eventStatusId: number;
+    public retryCount: number;
+    public urn: string;
+    public errorMessage: string;
+    public eventQueue: TEventQueue;
+
+    public constructor(init?: Partial<TEventQueueItem>) { super(init); (Object as any).assign(this, init); }
+}
+
+export class TEntityEvent extends VantageTypeBaseWithVersioning implements IVantageCoreTypeWithoutVersioning, IHasPTA, IHasCreatedBy
+{
+    public entityId: number;
+    public eventActionId: number;
+    public entityEventDescription: string;
+    public entityEventStatusId: number;
+    public isSystem: boolean;
+    public eventAction: TEventAction;
+
+    public constructor(init?: Partial<TEntityEvent>) { super(init); (Object as any).assign(this, init); }
+}
+
+export class TEventActionType extends VantageTypeBaseWithVersioning implements IVantageCoreTypeWithoutVersioning, IHasPTA, IHasCreatedBy
+{
+    // @Required()
+    public eventActionTypeName: string;
+
+    public constructor(init?: Partial<TEventActionType>) { super(init); (Object as any).assign(this, init); }
+}
+
+export class TEventAction extends VantageTypeBaseWithVersioning implements IVantageCoreTypeWithoutVersioning, IHasPTA, IHasCreatedBy
+{
+    public eventQueueId: number;
+    public eventActionClassId: number;
+    public eventActionTypeId: number;
+    public eventActionName: string;
+    public eventActionDescription: string;
+    public eventActionAlias: string;
+    public eventActionStatusId: number;
+    public isSystem: boolean;
+    public entityEvents: TEntityEvent[];
+    public eventActionClass: TEventQueue;
+    public eventQueue: TEventQueue;
+    public eventActionType: TEventActionType;
+
+    public constructor(init?: Partial<TEventAction>) { super(init); (Object as any).assign(this, init); }
+}
+
+export class TEventQueue extends VantageTypeBaseWithVersioning implements IVantageCoreTypeWithoutVersioning, IHasPTA, IHasCreatedBy
+{
+    public eventQueueName: string;
+    public eventQueueMaxThreads: number;
+    public eventQueueItemRetries: number;
+    public eventQueueStatusId: number;
+    public items: TEventQueueItem[];
+    public eventActions: TEventAction[];
+
+    public constructor(init?: Partial<TEventQueue>) { super(init); (Object as any).assign(this, init); }
+}
+
+export class SocialNetworkModel extends UserBaseModel implements IBaseUserModel
+{
+    public socialUserId: string;
+    public socialScreenName: string;
+    public socialUserName: string;
+    public socialEmail: string;
+
+    public constructor(init?: Partial<SocialNetworkModel>) { super(init); (Object as any).assign(this, init); }
+}
+
+export class UserAccountModel extends UserBaseModel implements IBaseUserModel
+{
+    public sid: string;
+    public username: string;
+    public email: string;
+    public roles: string[];
+    public permissions: string[];
+
+    public constructor(init?: Partial<UserAccountModel>) { super(init); (Object as any).assign(this, init); }
+}
+
+export class UserInfoModel extends UserBaseModel implements IBaseUserModel
+{
+    public firstName: string;
+    public lastName: string;
+    public nickName: string;
+    public dateOfBirth: string;
+    public avatarImage: string;
+    public backgroundImage: string;
+    public gender: boolean;
+    public phone: string;
+    public mobilePhone: string;
+    public address: AddressModel;
+    public socialNetworks: SocialNetworkModel[];
+
+    public constructor(init?: Partial<UserInfoModel>) { super(init); (Object as any).assign(this, init); }
+}
+
+export class EmployeeInfoModel extends UserBaseModel implements IBaseUserModel
+{
+    public employeeNumber: string;
+    public employeeType: string;
+    public occupation: string;
+    public company: string;
+    public location: string;
+    public workPhone: string;
+
+    public constructor(init?: Partial<EmployeeInfoModel>) { super(init); (Object as any).assign(this, init); }
+}
+
+export class UserMessagingOptionsModel extends UserBaseModel implements IBaseUserModel
+{
+    public useEmail: boolean;
+    public useSms: boolean;
+    public useDigest: boolean;
+
+    public constructor(init?: Partial<UserMessagingOptionsModel>) { super(init); (Object as any).assign(this, init); }
+}
+
+export class UserRegionalModel extends UserBaseModel implements IBaseUserModel
+{
+    public timeZoneId: string;
+    public cultureId: number;
+    public timeZone: TimeZoneInfo;
+    public asTimeZoneDateTime: string;
+
+    public constructor(init?: Partial<UserRegionalModel>) { super(init); (Object as any).assign(this, init); }
+}
+
+export class UserProfileModel extends UserBaseModel implements IBaseUserModel
+{
+    public userAccount: UserAccountModel;
+    public userInfo: UserInfoModel;
+    public employeeInfo: EmployeeInfoModel;
+    public userMessagingOptions: UserMessagingOptionsModel;
+    public userRegionalModel: UserRegionalModel;
+
+    public constructor(init?: Partial<UserProfileModel>) { super(init); (Object as any).assign(this, init); }
+}
+
+export class TSetting extends VantageTypeBaseWithVersioning implements IVantageCoreTypeWithoutVersioning, IHasPTA, IHasCreatedBy
+{
+    public tenantId: number;
+    public settingName: string;
+    public settingAlias: string;
+    public settingType: number;
+    public settingValue: string;
+    public settingValue1: string;
+    public settingValue2: string;
+    public settingValue3: string;
+
+    public constructor(init?: Partial<TSetting>) { super(init); (Object as any).assign(this, init); }
+}
+
+export class TGoalStatus extends VantageTypeBaseWithVersioning implements IVantageCoreTypeWithoutVersioning, IHasPTA, IHasCreatedBy
+{
+    public description: string;
+
+    public constructor(init?: Partial<TGoalStatus>) { super(init); (Object as any).assign(this, init); }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export interface IBaseUserModel
+{
+}
+
+export class VantagePagedResponse<T>
+{
+    public responseStatus: ResponseStatus;
+    public result: PagedList<T>;
+    public errorCode: string;
+    public errorMessage: string;
+    public isSuccess: boolean;
+    public stackTrace: string;
+
+    public constructor(init?: Partial<VantagePagedResponse<T>>) { (Object as any).assign(this, init); }
+}
+
+export class VantageResponse<T>
+{
+    public responseStatus: ResponseStatus;
+    public result: T;
+    public errorCode: string;
+    public errorMessage: string;
+    public isSuccess: boolean;
+    public stackTrace: string;
+
+    public constructor(init?: Partial<VantageResponse<T>>) { (Object as any).assign(this, init); }
+}
+
+export class PermissionResponse
+{
+    public responseStatus: ResponseStatus;
+    public result: TPermission;
+    public errorCode: string;
+    public errorMessage: string;
+    public isSuccess: boolean;
+    public stackTrace: string;
+
+    public constructor(init?: Partial<PermissionResponse>) { (Object as any).assign(this, init); }
+}
+
+export class PermissionPagedResponse
+{
+    public responseStatus: ResponseStatus;
+    public result: PagedList<TPermission>;
+    public errorCode: string;
+    public errorMessage: string;
+    public isSuccess: boolean;
+    public stackTrace: string;
+
+    public constructor(init?: Partial<PermissionPagedResponse>) { (Object as any).assign(this, init); }
+}
+
+export class RolePermissionResponse
+{
+    public responseStatus: ResponseStatus;
+    public result: TRolePermission;
+    public errorCode: string;
+    public errorMessage: string;
+    public isSuccess: boolean;
+    public stackTrace: string;
+
+    public constructor(init?: Partial<RolePermissionResponse>) { (Object as any).assign(this, init); }
+}
+
+export class RolePermissionPagedResponse
+{
+    public responseStatus: ResponseStatus;
+    public result: PagedList<TRolePermission>;
+    public errorCode: string;
+    public errorMessage: string;
+    public isSuccess: boolean;
+    public stackTrace: string;
+
+    public constructor(init?: Partial<RolePermissionPagedResponse>) { (Object as any).assign(this, init); }
+}
+
+// @DataContract
+export class AuthenticateResponse implements IHasSessionId, IHasBearerToken
+{
+    // @DataMember(Order=1)
+    public userId: string;
+
+    // @DataMember(Order=2)
+    public sessionId: string;
+
+    // @DataMember(Order=3)
+    public userName: string;
+
+    // @DataMember(Order=4)
+    public displayName: string;
+
+    // @DataMember(Order=5)
+    public referrerUrl: string;
+
+    // @DataMember(Order=6)
+    public bearerToken: string;
+
+    // @DataMember(Order=7)
+    public refreshToken: string;
+
+    // @DataMember(Order=8)
+    public profileUrl: string;
+
+    // @DataMember(Order=9)
+    public roles: string[];
+
+    // @DataMember(Order=10)
+    public permissions: string[];
+
+    // @DataMember(Order=11)
+    public responseStatus: ResponseStatus;
+
+    // @DataMember(Order=12)
+    public meta: { [index: string]: string; };
+
+    public constructor(init?: Partial<AuthenticateResponse>) { (Object as any).assign(this, init); }
+}
+
+// @DataContract
+export class AssignRolesResponse
+{
+    // @DataMember(Order=1)
+    public allRoles: string[];
+
+    // @DataMember(Order=2)
+    public allPermissions: string[];
+
+    // @DataMember(Order=3)
+    public meta: { [index: string]: string; };
+
+    // @DataMember(Order=4)
+    public responseStatus: ResponseStatus;
+
+    public constructor(init?: Partial<AssignRolesResponse>) { (Object as any).assign(this, init); }
+}
+
+// @DataContract
+export class UnAssignRolesResponse
+{
+    // @DataMember(Order=1)
+    public allRoles: string[];
+
+    // @DataMember(Order=2)
+    public allPermissions: string[];
+
+    // @DataMember(Order=3)
+    public meta: { [index: string]: string; };
+
+    // @DataMember(Order=4)
+    public responseStatus: ResponseStatus;
+
+    public constructor(init?: Partial<UnAssignRolesResponse>) { (Object as any).assign(this, init); }
+}
+
+// @DataContract
+export class RegisterResponse
+{
+    // @DataMember(Order=1)
+    public userId: string;
+
+    // @DataMember(Order=2)
+    public sessionId: string;
+
+    // @DataMember(Order=3)
+    public userName: string;
+
+    // @DataMember(Order=4)
+    public referrerUrl: string;
+
+    // @DataMember(Order=5)
+    public bearerToken: string;
+
+    // @DataMember(Order=6)
+    public refreshToken: string;
+
+    // @DataMember(Order=7)
+    public responseStatus: ResponseStatus;
+
+    // @DataMember(Order=8)
+    public meta: { [index: string]: string; };
+
+    public constructor(init?: Partial<RegisterResponse>) { (Object as any).assign(this, init); }
+}
+
+// @DataContract
+export class ConvertSessionToTokenResponse
+{
+    // @DataMember(Order=1)
+    public meta: { [index: string]: string; };
+
+    // @DataMember(Order=2)
+    public accessToken: string;
+
+    // @DataMember(Order=3)
+    public refreshToken: string;
+
+    // @DataMember(Order=4)
+    public responseStatus: ResponseStatus;
+
+    public constructor(init?: Partial<ConvertSessionToTokenResponse>) { (Object as any).assign(this, init); }
+}
+
+// @DataContract
+export class GetAccessTokenResponse
+{
+    // @DataMember(Order=1)
+    public accessToken: string;
+
+    // @DataMember(Order=2)
+    public meta: { [index: string]: string; };
+
+    // @DataMember(Order=3)
+    public responseStatus: ResponseStatus;
+
+    public constructor(init?: Partial<GetAccessTokenResponse>) { (Object as any).assign(this, init); }
+}
+
+// @Route("/admin/queue-manager/event-queue/{eventQueueId}/items", "GET")
+export class FetchEventQueueItems implements IReturn<VantagePagedResponse<TEventQueueItem>>, IPageable, ISortable
+{
+    public eventQueueId: number;
+    public eventTypeName: string;
+    public refId: number;
+    public eventStatusId: number;
+    public urn: string;
+    public withReferences: boolean;
+    public page: number;
+    public pageSize: number;
+    public sortDirection: string;
+    public sortField: string;
+
+    public constructor(init?: Partial<FetchEventQueueItems>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TEventQueueItem>(); }
+    public getTypeName() { return 'FetchEventQueueItems'; }
+}
+
+// @Route("/admin/queue-manager/event-queue/{eventQueueId}/item/{id}", "GET")
+export class FetchEventQueueItem implements IReturn<VantagePagedResponse<TEventQueueItem>>
+{
+    public id: number;
+    public eventQueueId: number;
+    public eventTypeName: string;
+    public refId: number;
+    public eventStatusId: number;
+    public urn: string;
+    public withReferences: boolean;
+
+    public constructor(init?: Partial<FetchEventQueueItem>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TEventQueueItem>(); }
+    public getTypeName() { return 'FetchEventQueueItem'; }
+}
+
+// @Route("/admin/queue-manager/event-queues/create", "POST")
+export class CreateEventQueueItem implements IReturn<VantageResponse<TEventQueueItem>>
+{
+    public eventQueueId: number;
+    public eventTypeName: string;
+    public refId: number;
+    public eventStatusId: number;
+    public urn: string;
+
+    public constructor(init?: Partial<CreateEventQueueItem>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TEventQueueItem>(); }
+    public getTypeName() { return 'CreateEventQueueItem'; }
+}
+
+// @Route("/admin/queue-manager/event-queues/{id}/save", "PUT")
+// @Route("/admin/queue-manager/event-queues/create", "POST")
+export class UpdateEventQueueItem extends CreateEventQueueItem implements IReturn<VantageResponse<TEventQueueItem>>
+{
+    public id: number;
+
+    public constructor(init?: Partial<UpdateEventQueueItem>) { super(init); (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TEventQueueItem>(); }
+    public getTypeName() { return 'UpdateEventQueueItem'; }
+}
+
+// @Route("/admin/queue-manager/event-queues/{id}/delete", "DELETE")
+export class RemoveEventQueueItem implements IReturn<VantageResponse<boolean>>
+{
+    public id: number;
+
+    public constructor(init?: Partial<RemoveEventQueueItem>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<boolean>(); }
+    public getTypeName() { return 'RemoveEventQueueItem'; }
+}
+
+/**
+* Get QueueManager Status
+*/
+// @Route("/admin/queue-manager/status", "GET")
+// @Api(Description="Get QueueManager Status")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class CheckEventQueueStatus implements IReturn<VantageResponse<boolean>>
+{
+
+    public constructor(init?: Partial<CheckEventQueueStatus>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<boolean>(); }
+    public getTypeName() { return 'CheckEventQueueStatus'; }
+}
+
+// @Route("/admin/queue-manager/event-queues", "GET")
+export class FetchEventQueues implements IReturn<VantagePagedResponse<TEventQueue>>, IPageable, ISortable
+{
+    public eventQueueName: string;
+    public eventQueueStatusId: number;
+    public withReferences: boolean;
+    public page: number;
+    public pageSize: number;
+    public sortDirection: string;
+    public sortField: string;
+
+    public constructor(init?: Partial<FetchEventQueues>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TEventQueue>(); }
+    public getTypeName() { return 'FetchEventQueues'; }
+}
+
+// @Route("/admin/queue-manager/event-queues/{id}", "GET")
+export class FetchEventQueue implements IReturn<VantageResponse<TEventQueue>>
+{
+    public id: number;
+    public eventQueueName: string;
+    public eventQueueStatusId: number;
+    public withReferences: boolean;
+
+    public constructor(init?: Partial<FetchEventQueue>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TEventQueue>(); }
+    public getTypeName() { return 'FetchEventQueue'; }
+}
+
+// @Route("/admin/queue-manager/event-queues/create", "POST")
+export class CreateEventQueue implements IReturn<VantageResponse<TEventQueue>>
+{
+    public eventQueueName: string;
+    public eventQueueStatusId: number;
+    public eventQueueMaxThreads: number;
+
+    public constructor(init?: Partial<CreateEventQueue>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TEventQueue>(); }
+    public getTypeName() { return 'CreateEventQueue'; }
+}
+
+// @Route("/admin/queue-manager/event-queues/{id}/save", "PUT")
+// @Route("/admin/queue-manager/event-queues/create", "POST")
+export class UpdateEventQueue extends CreateEventQueue implements IReturn<VantageResponse<TEventQueue>>
+{
+    public id: number;
+
+    public constructor(init?: Partial<UpdateEventQueue>) { super(init); (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TEventQueue>(); }
+    public getTypeName() { return 'UpdateEventQueue'; }
+}
+
+// @Route("/admin/queue-manager/event-queues/{id}/delete", "DELETE")
+export class RemoveEventQueue implements IReturn<VantageResponse<boolean>>
+{
+    public id: number;
+
+    public constructor(init?: Partial<RemoveEventQueue>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<boolean>(); }
+    public getTypeName() { return 'RemoveEventQueue'; }
+}
+
+// @Route("/admin/queue-manager/event-queues/{id}/start", "POST")
+export class StartEventQueue implements IReturn<VantageResponse<boolean>>
+{
+
+    public constructor(init?: Partial<StartEventQueue>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<boolean>(); }
+    public getTypeName() { return 'StartEventQueue'; }
+}
+
+// @Route("/admin/queue-manager/event-queues/{id}/stop", "POST")
+export class StopEventQueue implements IReturn<VantageResponse<boolean>>
+{
+
+    public constructor(init?: Partial<StopEventQueue>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<boolean>(); }
+    public getTypeName() { return 'StopEventQueue'; }
+}
+
+// @Route("/admin/queue-manager/event-queues/{id}/restart", "POST")
+export class RestartEventQueue implements IReturn<VantageResponse<boolean>>
+{
+
+    public constructor(init?: Partial<RestartEventQueue>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<boolean>(); }
+    public getTypeName() { return 'RestartEventQueue'; }
+}
+
+// @Route("/admin/queue-manager/event-queues/stats", "POST")
+export class GetEventQueueStats implements IReturn<VantageResponse<IMessageHandlerStats>>
+{
+
+    public constructor(init?: Partial<GetEventQueueStats>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<IMessageHandlerStats>(); }
+    public getTypeName() { return 'GetEventQueueStats'; }
+}
+
+/**
+* GetPermission By Id
+*/
+// @Route("/auth/permission/id/{Id}", "GET")
+// @Api(Description="GetPermission By Id")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class GetPermissionById implements IReturn<PermissionResponse>
+{
+    public id: number;
+
+    public constructor(init?: Partial<GetPermissionById>) { (Object as any).assign(this, init); }
+    public createResponse() { return new PermissionResponse(); }
+    public getTypeName() { return 'GetPermissionById'; }
+}
+
+/**
+* Permission Search
+*/
+// @Route("/auth/permissions", "GET")
+// @Api(Description="Permission Search")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class PermissionSearch implements IReturn<PermissionPagedResponse>, IPageable
+{
+    public permissionName: string;
+    public page: number;
+    public pageSize: number;
+    public isEnabled: boolean;
+    public isSystem: boolean;
+    public searchName: string;
+
+    public constructor(init?: Partial<PermissionSearch>) { (Object as any).assign(this, init); }
+    public createResponse() { return new PermissionPagedResponse(); }
+    public getTypeName() { return 'PermissionSearch'; }
+}
+
+/**
+* Create a permission
+*/
+// @Route("/auth/permission/create", "POST")
+// @Api(Description="Create a permission")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class CreatePermission implements IReturn<PermissionResponse>
+{
+    public id: number;
+    public permissionName: string;
+    public permissionAlias: string;
+    public permissionDescription: string;
+    public isEnabled: boolean;
+    public isSystem: boolean;
+
+    public constructor(init?: Partial<CreatePermission>) { (Object as any).assign(this, init); }
+    public createResponse() { return new PermissionResponse(); }
+    public getTypeName() { return 'CreatePermission'; }
+}
+
+/**
+* Update a permission
+*/
+// @Route("/auth/permission/update", "PUT")
+// @Api(Description="Update a permission")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class UpdatePermission implements IReturn<PermissionResponse>
+{
+    public id: number;
+    public permissionName: string;
+    public permissionAlias: string;
+    public permissionDescription: string;
+    public isEnabled: boolean;
+    public isSystem: boolean;
+
+    public constructor(init?: Partial<UpdatePermission>) { (Object as any).assign(this, init); }
+    public createResponse() { return new PermissionResponse(); }
+    public getTypeName() { return 'UpdatePermission'; }
+}
+
+/**
+* Delete a permission
+*/
+// @Route("/auth/permission/delete", "DELETE")
+// @Api(Description="Delete a permission")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class DeletePermission implements IReturn<PermissionResponse>
+{
+    public id: number;
+
+    public constructor(init?: Partial<DeletePermission>) { (Object as any).assign(this, init); }
+    public createResponse() { return new PermissionResponse(); }
+    public getTypeName() { return 'DeletePermission'; }
+}
+
+/**
+* Get a role permission
+*/
+// @Route("/auth/role-permission/fetch/{Id}", "GET")
+// @Api(Description="Get a role permission")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class GetRolePermissionById implements IReturn<RolePermissionResponse>
+{
+    public id: number;
+    public roleId: number;
+    public permissionId: number;
+    public isEnabled: boolean;
+
+    public constructor(init?: Partial<GetRolePermissionById>) { (Object as any).assign(this, init); }
+    public createResponse() { return new RolePermissionResponse(); }
+    public getTypeName() { return 'GetRolePermissionById'; }
+}
+
+/**
+* List Role Permissions
+*/
+// @Route("/auth/role-permissions/{RoleId}/{PermissionId}/{Page}/{PageSize}", "GET")
+// @Route("/auth/role-permissions/{RoleId}/{Page}/{PageSize}", "GET")
+// @Api(Description="List Role Permissions")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class RolePermissionSearch implements IReturn<RolePermissionPagedResponse>, IPageable
+{
+    public page: number;
+    public pageSize: number;
+    public roleId: number;
+    public permissionId: number;
+
+    public constructor(init?: Partial<RolePermissionSearch>) { (Object as any).assign(this, init); }
+    public createResponse() { return new RolePermissionPagedResponse(); }
+    public getTypeName() { return 'RolePermissionSearch'; }
+}
+
+/**
+* Create a role permissions
+*/
+// @Route("/auth/role-permission/create/{RoleId}", "POST")
+// @Api(Description="Create a role permissions")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class CreateRolePermission implements IReturn<RolePermissionResponse>
+{
+    public id: number;
+    public roleId: number;
+    public permissionId: number;
+    public isEnabled: boolean;
+
+    public constructor(init?: Partial<CreateRolePermission>) { (Object as any).assign(this, init); }
+    public createResponse() { return new RolePermissionResponse(); }
+    public getTypeName() { return 'CreateRolePermission'; }
+}
+
+/**
+* Update role permission
+*/
+// @Route("/auth/role-permission/update/{Id}", "PUT")
+// @Api(Description="Update role permission")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class UpdateRolePermission implements IReturn<RolePermissionResponse>
+{
+    public id: number;
+    public roleId: number;
+    public permissionId: number;
+    public isEnabled: boolean;
+
+    public constructor(init?: Partial<UpdateRolePermission>) { (Object as any).assign(this, init); }
+    public createResponse() { return new RolePermissionResponse(); }
+    public getTypeName() { return 'UpdateRolePermission'; }
+}
+
+/**
+* Delete role permission
+*/
+// @Route("/auth/role-permission/delete/{Id}", "DELETE")
+// @Api(Description="Delete role permission")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class DeleteRolePermission implements IReturn<RolePermissionResponse>
+{
+    public id: number;
+    public roleId: number;
+    public permissionId: number;
+    public isEnabled: boolean;
+
+    public constructor(init?: Partial<DeleteRolePermission>) { (Object as any).assign(this, init); }
+    public createResponse() { return new RolePermissionResponse(); }
+    public getTypeName() { return 'DeleteRolePermission'; }
+}
+
+/**
+* Get System Roles
+*/
+// @Route("/auth/roles", "GET")
+// @Api(Description="Get System Roles")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class GetRoles implements IReturn<VantagePagedResponse<TRole>>
+{
+    public systemOnly: boolean;
+    public searchName: string;
+    public includePermissions: boolean;
+    public page: number;
+    public pageSize: number;
+
+    public constructor(init?: Partial<GetRoles>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TRole>(); }
+    public getTypeName() { return 'GetRoles'; }
+}
+
+/**
+* Get Role By Id
+*/
+// @Route("/auth/roles/id/{Id}/subscription/{subscriptionId}", "GET")
+// @Api(Description="Get Role By Id")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class GetRoleById implements IReturn<VantageResponse<TRole>>
+{
+    public id: number;
+    public includePermissions: boolean;
+
+    public constructor(init?: Partial<GetRoleById>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TRole>(); }
+    public getTypeName() { return 'GetRoleById'; }
+}
+
+/**
+* Search for Role Permissions
+*/
+// @Route("/auth/role-permission/search/{RoleId}/{Page}/{PageSize}", "GET")
+// @Api(Description="Search for Role Permissions")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class GetRolePermissions implements IReturn<RolePermissionPagedResponse>, IPageable
+{
+    public include: string[];
+    public roleId: number;
+    public subscriptionId: number;
+    public page: number;
+    public pageSize: number;
+    public searchName: string;
+
+    public constructor(init?: Partial<GetRolePermissions>) { (Object as any).assign(this, init); }
+    public createResponse() { return new RolePermissionPagedResponse(); }
+    public getTypeName() { return 'GetRolePermissions'; }
+}
+
+/**
+* Create Role
+*/
+// @Route("/auth/roles/create", "POST")
+// @Api(Description="Create Role")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class CreateRole implements IReturn<VantageResponse<TRole>>
+{
+    public roleName: string;
+    public roleAlias: string;
+    public parentRoleId: number;
+    public roleDescription: string;
+    public isSystem: boolean;
+    public isEnabled: boolean;
+    public isPublic: boolean;
+    public autoMap: boolean;
+    public rolePermissionIds: string[];
+
+    public constructor(init?: Partial<CreateRole>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TRole>(); }
+    public getTypeName() { return 'CreateRole'; }
+}
+
+/**
+* Update a Role
+*/
+// @Route("/auth/roles/update/{Id}", "PUT")
+// @Api(Description="Update a Role")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class UpdateRole implements IReturn<VantageResponse<TRole>>
+{
+    public id: number;
+    public roleName: string;
+    public roleAlias: string;
+    public parentRoleId: number;
+    public roleDescription: string;
+    public isSystem: boolean;
+    public isEnabled: boolean;
+    public isPublic: boolean;
+    public autoMap: boolean;
+    public rolePermissionIds: string[];
+
+    public constructor(init?: Partial<UpdateRole>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TRole>(); }
+    public getTypeName() { return 'UpdateRole'; }
+}
+
+/**
+* Delete Role
+*/
+// @Route("/auth/roles/delete/{Id}", "DELETE")
+// @Api(Description="Delete Role")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class DeleteRole implements IReturn<VantageResponse<boolean>>
+{
+    public id: number;
+
+    public constructor(init?: Partial<DeleteRole>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<boolean>(); }
+    public getTypeName() { return 'DeleteRole'; }
+}
+
+/**
+* Change Role Status
+*/
+// @Route("/user/auth/role/change-role-status/{Id}", "POST")
+// @Api(Description="Change Role Status")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class ChangeRoleStatus implements IReturn<VantageResponse<TUserRole>>
+{
+    public id: number;
+
+    public constructor(init?: Partial<ChangeRoleStatus>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TUserRole>(); }
+    public getTypeName() { return 'ChangeRoleStatus'; }
+}
+
+/**
+* Add User To Role
+*/
+// @Route("/user/auth/role/add-user-to-role/{RoleId}", "POST")
+// @Api(Description="Add User To Role")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class AddUserToRole implements IReturn<VantageResponse<TUserRole>>
+{
+    public id: number;
+    public roleId: number;
+    public userAuthId: number;
+    public isSystem: boolean;
+    public isEnabled: boolean;
+
+    public constructor(init?: Partial<AddUserToRole>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TUserRole>(); }
+    public getTypeName() { return 'AddUserToRole'; }
+}
+
+/**
+* Remove User From Role
+*/
+// @Route("/user/auth/role/remove-user-from-role/{RoleId}", "POST")
+// @Api(Description="Remove User From Role")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class RemoveUserFromRole implements IReturn<VantageResponse<boolean>>
+{
+    public id: number;
+    public roleId: number;
+    public userAuthId: number;
+    public isSystem: boolean;
+    public isEnabled: boolean;
+
+    public constructor(init?: Partial<RemoveUserFromRole>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<boolean>(); }
+    public getTypeName() { return 'RemoveUserFromRole'; }
+}
+
+/**
+* Get User Role By Id
+*/
+// @Route("/user/auth/role/get-user-role-by-id/{Id}", "GET")
+// @Api(Description="Get User Role By Id")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class GetUserRoleById implements IReturn<VantageResponse<TUserRole>>
+{
+    public id: number;
+
+    public constructor(init?: Partial<GetUserRoleById>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TUserRole>(); }
+    public getTypeName() { return 'GetUserRoleById'; }
+}
+
+/**
+* Get User Role Assignments
+*/
+// @Route("/user/auth/role/get-user-for-role/{RoleId}", "GET")
+// @Api(Description="Get User Role Assignments")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class GetUsersForRole implements IReturn<VantagePagedResponse<TUser>>, IPageable
+{
+    public roleId: number;
+    public page: number;
+    public pageSize: number;
+
+    public constructor(init?: Partial<GetUsersForRole>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TUser>(); }
+    public getTypeName() { return 'GetUsersForRole'; }
+}
+
+/**
+* User Role Search
+*/
+// @Route("/user/auth/role/user-role-search/{RoleName}", "GET")
+// @Api(Description="User Role Search")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class UserRoleSearch implements IReturn<VantagePagedResponse<TUserRole>>, IPageable
+{
+    public userId: number;
+    public roleId: number;
+    public page: number;
+    public pageSize: number;
+
+    public constructor(init?: Partial<UserRoleSearch>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TUserRole>(); }
+    public getTypeName() { return 'UserRoleSearch'; }
+}
+
+/**
+* Update User Role
+*/
+// @Route("/user/auth/role/update-user-role/{RoleId}", "PUT")
+// @Api(Description="Update User Role")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class UpdateUserRole implements IReturn<VantageResponse<TUserRole>>
+{
+    public id: number;
+    public roleId: number;
+    public userAuthId: number;
+    public isSystem: boolean;
+    public isEnabled: boolean;
+
+    public constructor(init?: Partial<UpdateUserRole>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TUserRole>(); }
+    public getTypeName() { return 'UpdateUserRole'; }
+}
+
+/**
+* Delete User Role
+*/
+// @Route("/user/auth/role/delete-user-role/{Id}", "DELETE")
+// @Api(Description="Delete User Role")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class DeleteUserRole implements IReturn<VantageResponse<TUserRole>>
+{
+    public id: number;
+
+    public constructor(init?: Partial<DeleteUserRole>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TUserRole>(); }
+    public getTypeName() { return 'DeleteUserRole'; }
+}
+
+/**
+* Recover Role
+*/
+// @Route("/user/auth/role/recover-user-role/{Id}", "PATCH")
+// @Api(Description="Recover Role")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class RecoverUserRole implements IReturn<VantageResponse<TUserRole>>
+{
+    public id: number;
+
+    public constructor(init?: Partial<RecoverUserRole>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TUserRole>(); }
+    public getTypeName() { return 'RecoverUserRole'; }
+}
+
+/**
+* Find users
+*/
+// @Route("/user/auth/find-users/{SearchName}/{OnlyLockedUsers}/{SearchInRoles}/{Page}/{PageSize}", "GET")
+// @Route("/user/auth/find-users/{SearchName}/{SearchInRoles}/{Page}/{PageSize}", "GET")
+// @Route("/user/auth/find-users/{SearchName}/{SearchInRoles}", "GET")
+// @Api(Description="Find users")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class FindUsers implements IReturn<VantagePagedResponse<TUser>>, IPageable
+{
+    public searchName: string;
+    public onlyLockedUsers: boolean;
+    public searchInRoles: string;
+    public page: number;
+    public pageSize: number;
+
+    public constructor(init?: Partial<FindUsers>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TUser>(); }
+    public getTypeName() { return 'FindUsers'; }
+}
+
+/**
+* Get a users auth info
+*/
+// @Route("/user/auth/get-user-auth", "POST")
+// @Api(Description="Get a users auth info")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class GetUserAuth implements IReturn<VantageResponse<TUserAuth>>
+{
+    public userAuthId: number;
+    public sessionId: string;
+
+    public constructor(init?: Partial<GetUserAuth>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TUserAuth>(); }
+    public getTypeName() { return 'GetUserAuth'; }
+}
+
+/**
+* Create User
+*/
+// @Route("/user/auth/create", "POST")
+// @Api(Description="Create User")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class CreateUser implements IReturn<VantageResponse<TUser>>
+{
+    public userAuthId: number;
+    public email: string;
+    public userName: string;
+    public displayName: string;
+    public firstName: string;
+    public lastName: string;
+    public phoneNumber: string;
+    public gender: string;
+    public birthDate: string;
+    public nickname: string;
+    public occupation: string;
+    public company: string;
+    public address: string;
+    public address2: string;
+    public city: string;
+    public state: string;
+    public country: string;
+    public postalCode: string;
+    public culture: string;
+    public language: string;
+    public timeZone: string;
+    public password: string;
+    public isLockedOut: boolean;
+    public userRoles: string[];
+
+    public constructor(init?: Partial<CreateUser>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TUser>(); }
+    public getTypeName() { return 'CreateUser'; }
+}
+
+/**
+* Update User
+*/
+// @Route("/user/auth/update", "PUT")
+// @Route("/user/auth/create", "POST")
+// @Api(Description="Update User")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class UpdateUser extends CreateUser implements IReturn<VantageResponse<TUser>>
+{
+
+    public constructor(init?: Partial<UpdateUser>) { super(init); (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TUser>(); }
+    public getTypeName() { return 'UpdateUser'; }
+}
+
+/**
+* Update User Info
+*/
+// @Route("/user/auth/update-user-account", "PUT")
+// @Api(Description="Update User Info")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class UpdateUserInfo implements IReturn<VantageResponse<UserProfileModel>>
+{
+    public userId: number;
+    public userAuthId: number;
+    public displayName: string;
+    public firstName: string;
+    public lastName: string;
+    public phoneNumber: string;
+    public gender: string;
+    public birthDate: string;
+    public nickname: string;
+    public avatarImage: string;
+    public backgroundImage: string;
+    public address: AddressModel;
+    public socialNetwork: SocialNetworkModel;
+
+    public constructor(init?: Partial<UpdateUserInfo>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<UserProfileModel>(); }
+    public getTypeName() { return 'UpdateUserInfo'; }
+}
+
+/**
+* Update User Account
+*/
+// @Route("/user/auth/update-user-account", "PUT")
+// @Api(Description="Update User Account")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class UpdateUserRegionalInfo implements IReturn<VantageResponse<UserProfileModel>>
+{
+    public userAuthId: number;
+    public userId: number;
+    public cultureId: number;
+    public timeZoneId: string;
+
+    public constructor(init?: Partial<UpdateUserRegionalInfo>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<UserProfileModel>(); }
+    public getTypeName() { return 'UpdateUserRegionalInfo'; }
+}
+
+/**
+* Update Employee Info
+*/
+// @Route("/user/auth/update-employee-info", "PUT")
+// @Api(Description="Update Employee Info")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class UpdateEmployeeInfo implements IReturn<VantageResponse<UserProfileModel>>
+{
+    public userId: number;
+    public userAuthId: number;
+    public employeeNumber: string;
+    public employeeType: string;
+    public occupation: string;
+    public companyName: string;
+    public location: string;
+    public workPhone: string;
+
+    public constructor(init?: Partial<UpdateEmployeeInfo>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<UserProfileModel>(); }
+    public getTypeName() { return 'UpdateEmployeeInfo'; }
+}
+
+/**
+* Update User Messaging Options Info
+*/
+// @Route("/user/auth/update-employee-info", "PUT")
+// @Api(Description="Update User Messaging Options Info")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class UpdateUserMessagingOptions implements IReturn<VantageResponse<UserProfileModel>>
+{
+    public userId: number;
+    public userAuthId: number;
+    public useEmail: string;
+    public useSms: string;
+    public useDigest: string;
+
+    public constructor(init?: Partial<UpdateUserMessagingOptions>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<UserProfileModel>(); }
+    public getTypeName() { return 'UpdateUserMessagingOptions'; }
+}
+
+/**
+* Delete User
+*/
+// @Route("/user/auth/delete", "DELETE")
+// @Route("/user/auth/create", "POST")
+// @Api(Description="Delete User")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class DeleteUser extends CreateUser implements IReturn<VantageResponse<TUser>>
+{
+
+    public constructor(init?: Partial<DeleteUser>) { super(init); (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TUser>(); }
+    public getTypeName() { return 'DeleteUser'; }
+}
+
+/**
+* User Password Reset
+*/
+// @Route("/user/auth/password-reset", "POST")
+// @Api(Description="User Password Reset")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class ResetPassword implements IReturn<VantageResponse<TUser>>
+{
+    public userId: number;
+    public email: string;
+    public password: string;
+
+    public constructor(init?: Partial<ResetPassword>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TUser>(); }
+    public getTypeName() { return 'ResetPassword'; }
+}
+
+/**
+* Impersonate a user
+*/
+// @Route("/user/auth/impersonate", "POST")
+// @Api(Description="Impersonate a user")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Your request was not authorized", StatusCode="403")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class ImpersonateUser
+{
+    public userAuthId: number;
+
+    public constructor(init?: Partial<ImpersonateUser>) { (Object as any).assign(this, init); }
+}
+
+// @Route("/vantage/settings", "GET")
+export class FetchSettings implements IReturn<VantagePagedResponse<TSetting>>, IPageable, ISortable
+{
+    public tenantId: number;
+    public settingName: string;
+    public settingAlias: string;
+    public settingType: number;
+    public settingValue: string;
+    public withReferences: boolean;
+    public page: number;
+    public pageSize: number;
+    public sortDirection: string;
+    public sortField: string;
+
+    public constructor(init?: Partial<FetchSettings>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TSetting>(); }
+    public getTypeName() { return 'FetchSettings'; }
+}
+
+// @Route("/vantage/settings/{Id}", "GET")
+export class FetchSetting implements IReturn<VantageResponse<TSetting>>
+{
+    public id: number;
+    public tenantId: number;
+    public settingName: string;
+    public settingAlias: string;
+    public settingType: number;
+    public settingValue: string;
+    public withReferences: boolean;
+
+    public constructor(init?: Partial<FetchSetting>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TSetting>(); }
+    public getTypeName() { return 'FetchSetting'; }
+}
+
+// @Route("/vantage/settings/create", "POST")
+export class CreateSetting implements IReturn<VantageResponse<TSetting>>
+{
+    public tenantId: number;
+    public settingName: string;
+    public settingAlias: string;
+    public settingType: number;
+    public settingValue: string;
+
+    public constructor(init?: Partial<CreateSetting>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TSetting>(); }
+    public getTypeName() { return 'CreateSetting'; }
+}
+
+// @Route("/vantage/settings/{id}/save", "PUT")
+// @Route("/vantage/settings/create", "POST")
+export class UpdateSetting extends CreateSetting implements IReturn<VantageResponse<TSetting>>
+{
+    public id: number;
+
+    public constructor(init?: Partial<UpdateSetting>) { super(init); (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TSetting>(); }
+    public getTypeName() { return 'UpdateSetting'; }
+}
+
+// @Route("/vantage/settings/{id}/delete", "DELETE")
+export class RemoveSetting implements IReturn<VantageResponse<boolean>>
+{
+    public id: number;
+
+    public constructor(init?: Partial<RemoveSetting>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<boolean>(); }
+    public getTypeName() { return 'RemoveSetting'; }
+}
+
+/**
+* GetAllCoreBehavioursService
+*/
+// @Route("/hr/corebehaviours", "GET")
+// @Api(Description="GetAllCoreBehavioursService")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class FetchCoreBehaviours implements IReturn<VantagePagedResponse<TCoreBehaviour>>, IPageable, ISortable
+{
+    public hrGoalId: number;
+    public name: string;
+    public description: string;
+    public dueDate: string;
+    public isChanged: boolean;
+    public managerRatingId: number;
+    public employeeRatingId: number;
+    public agreedRatingId: number;
+    public managerComment: string;
+    public employeeComment: string;
+    public withReferences: boolean;
+    public page: number;
+    public pageSize: number;
+    public sortDirection: string;
+    public sortField: string;
+
+    public constructor(init?: Partial<FetchCoreBehaviours>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TCoreBehaviour>(); }
+    public getTypeName() { return 'FetchCoreBehaviours'; }
+}
+
+// @Route("/hr/corebehaviours/{Id}", "GET")
+export class FetchCoreBehaviour implements IReturn<VantageResponse<TCoreBehaviour>>, IGet
+{
+    public id: number;
+
+    public constructor(init?: Partial<FetchCoreBehaviour>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TCoreBehaviour>(); }
+    public getTypeName() { return 'FetchCoreBehaviour'; }
+}
+
+// @Route("/hr/corebehaviours", "POST")
+export class AddCoreBehaviour implements IReturn<VantageResponse<TCoreBehaviour>>, IPost
+{
+    public hrGoalId: number;
+    public name: string;
+    public description: string;
+    public dueDate: string;
+    public isChanged: boolean;
+    public managerRatingId: number;
+    public employeeRatingId: number;
+    public agreedRatingId: number;
+    public managerComment: string;
+    public employeeComment: string;
+
+    public constructor(init?: Partial<AddCoreBehaviour>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TCoreBehaviour>(); }
+    public getTypeName() { return 'AddCoreBehaviour'; }
+}
+
+// @Route("/hr/corebehaviours/update/{Id}", "PUT")
+// @Route("/hr/corebehaviours", "POST")
+export class UpdateCoreBehaviour extends AddCoreBehaviour implements IReturn<VantageResponse<TCoreBehaviour>>, IPost, IPut
+{
+    public id: number;
+
+    public constructor(init?: Partial<UpdateCoreBehaviour>) { super(init); (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TCoreBehaviour>(); }
+    public getTypeName() { return 'UpdateCoreBehaviour'; }
+}
+
+// @Route("/hr/corebehaviours/{Id}", "DELETE")
+export class RemoveCoreBehaviour implements IReturn<VantageResponse<TCoreBehaviour>>, IDelete
+{
+    public id: number;
+
+    public constructor(init?: Partial<RemoveCoreBehaviour>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TCoreBehaviour>(); }
+    public getTypeName() { return 'RemoveCoreBehaviour'; }
+}
+
+/**
+* GetAllCoreBehaviourTypesService
+*/
+// @Route("/hr/corebehaviourtemplates", "GET")
+// @Api(Description="GetAllCoreBehaviourTypesService")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class FetchCoreBehaviourTemplates implements IReturn<VantagePagedResponse<TCoreBehaviourTemplate>>, IPageable, ISortable
+{
+    public id: number;
+    public name: string;
+    public description: string;
+    public weighting: number;
+    public withReferences: boolean;
+    public page: number;
+    public pageSize: number;
+    public sortDirection: string;
+    public sortField: string;
+
+    public constructor(init?: Partial<FetchCoreBehaviourTemplates>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TCoreBehaviourTemplate>(); }
+    public getTypeName() { return 'FetchCoreBehaviourTemplates'; }
+}
+
+// @Route("/hr/corebehaviourtemplates/{Id}", "GET")
+export class FetchCoreBehaviourTemplate implements IReturn<VantageResponse<TCoreBehaviourTemplate>>, IGet
+{
+    public id: number;
+    public name: string;
+    public description: string;
+    public weighting: number;
+    public withReferences: boolean;
+
+    public constructor(init?: Partial<FetchCoreBehaviourTemplate>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TCoreBehaviourTemplate>(); }
+    public getTypeName() { return 'FetchCoreBehaviourTemplate'; }
+}
+
+// @Route("/hr/corebehaviourtemplates", "POST")
+export class AddCoreBehaviourTemplate implements IReturn<VantageResponse<TCoreBehaviourTemplate>>, IPost
+{
+    public name: string;
+    public description: string;
+    public weighting: number;
+
+    public constructor(init?: Partial<AddCoreBehaviourTemplate>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TCoreBehaviourTemplate>(); }
+    public getTypeName() { return 'AddCoreBehaviourTemplate'; }
+}
+
+// @Route("/hr/corebehaviourtemplates/update/{Id}", "PUT")
+// @Route("/hr/corebehaviourtemplates", "POST")
+export class UpdateCoreBehaviourTemplate extends AddCoreBehaviourTemplate implements IReturn<VantageResponse<TCoreBehaviourTemplate>>, IPost, IPut
+{
+    public id: number;
+
+    public constructor(init?: Partial<UpdateCoreBehaviourTemplate>) { super(init); (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TCoreBehaviourTemplate>(); }
+    public getTypeName() { return 'UpdateCoreBehaviourTemplate'; }
+}
+
+// @Route("/hr/corebehaviourtemplates/{Id}", "DELETE")
+export class RemoveCoreBehaviourTemplate implements IReturn<VantageResponse<TCoreBehaviourTemplate>>, IDelete
+{
+    public id: number;
+
+    public constructor(init?: Partial<RemoveCoreBehaviourTemplate>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TCoreBehaviourTemplate>(); }
+    public getTypeName() { return 'RemoveCoreBehaviourTemplate'; }
+}
+
+/**
+* GetAllFileUploadsService
+*/
+// @Route("/hr/fileuploads", "GET")
+// @Api(Description="GetAllFileUploadsService")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class FetchFileUploads implements IReturn<VantagePagedResponse<TFileUpload>>, IPageable, ISortable
+{
+    public id: number;
+    public kpiId: number;
+    public coreBehaviourId: number;
+    public filename: string;
+    public fileData: Uint8Array;
+    public withReferences: boolean;
+    public page: number;
+    public pageSize: number;
+    public sortDirection: string;
+    public sortField: string;
+
+    public constructor(init?: Partial<FetchFileUploads>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TFileUpload>(); }
+    public getTypeName() { return 'FetchFileUploads'; }
+}
+
+// @Route("/hr/fileuploads/{Id}", "GET")
+export class FetchFileUpload implements IReturn<VantageResponse<TFileUpload>>, IGet
+{
+    public id: number;
+    public kpiId: number;
+    public coreBehaviourId: number;
+    public filename: string;
+    public fileData: Uint8Array;
+
+    public constructor(init?: Partial<FetchFileUpload>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TFileUpload>(); }
+    public getTypeName() { return 'FetchFileUpload'; }
+}
+
+// @Route("/hr/fileuploads", "POST")
+export class AddFileUpload implements IReturn<VantageResponse<TFileUpload>>, IPost
+{
+    public kpiId: number;
+    public coreBehaviourId: number;
+    public filename: string;
+    public fileData: Uint8Array;
+
+    public constructor(init?: Partial<AddFileUpload>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TFileUpload>(); }
+    public getTypeName() { return 'AddFileUpload'; }
+}
+
+// @Route("/hr/fileuploads/update/{Id}", "PUT")
+// @Route("/hr/fileuploads", "POST")
+export class UpdateFileUpload extends AddFileUpload implements IReturn<VantageResponse<TFileUpload>>, IPost, IPut
+{
+    public id: number;
+
+    public constructor(init?: Partial<UpdateFileUpload>) { super(init); (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TFileUpload>(); }
+    public getTypeName() { return 'UpdateFileUpload'; }
+}
+
+// @Route("/hr/fileuploads/{Id}", "DELETE")
+export class RemoveFileUpload implements IReturn<VantageResponse<TFileUpload>>, IDelete
+{
+    public id: number;
+
+    public constructor(init?: Partial<RemoveFileUpload>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TFileUpload>(); }
+    public getTypeName() { return 'RemoveFileUpload'; }
+}
+
+/**
+* GetAllGoalsService
+*/
+// @Route("/hr/goals", "GET")
+// @Api(Description="GetAllGoalsService")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class FetchGoals implements IReturn<VantagePagedResponse<TGoal>>, IPageable, ISortable
+{
+    public id: number;
+    public withReferences: boolean;
+    public page: number;
+    public pageSize: number;
+    public sortDirection: string;
+    public sortField: string;
+
+    public constructor(init?: Partial<FetchGoals>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TGoal>(); }
+    public getTypeName() { return 'FetchGoals'; }
+}
+
+// @Route("/hr/goals/{Id}", "GET")
+export class FetchGoal implements IReturn<VantageResponse<TGoal>>, IGet
+{
+    public id: number;
+
+    public constructor(init?: Partial<FetchGoal>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TGoal>(); }
+    public getTypeName() { return 'FetchGoal'; }
+}
+
+// @Route("/hr/goals", "POST")
+export class AddGoal implements IReturn<VantageResponse<TGoal>>, IPost
+{
+    public name: string;
+    public goalStatusId: number;
+    public userWithManagerId: number;
+    public finalScore: number;
+    public startDate: string;
+    public endDate: string;
+    public reviewDate: string;
+
+    public constructor(init?: Partial<AddGoal>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TGoal>(); }
+    public getTypeName() { return 'AddGoal'; }
+}
+
+// @Route("/hr/goals/update/{Id}", "PUT")
+// @Route("/hr/goals", "POST")
+export class UpdateGoal extends AddGoal implements IReturn<VantageResponse<TGoal>>, IPost, IPut
+{
+    public id: number;
+
+    public constructor(init?: Partial<UpdateGoal>) { super(init); (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TGoal>(); }
+    public getTypeName() { return 'UpdateGoal'; }
+}
+
+// @Route("/hr/goals/{Id}", "DELETE")
+export class RemoveGoal implements IReturn<VantageResponse<TGoal>>, IDelete
+{
+    public id: number;
+
+    public constructor(init?: Partial<RemoveGoal>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TGoal>(); }
+    public getTypeName() { return 'RemoveGoal'; }
+}
+
+/**
+* GetAllGoalStatusesService
+*/
+// @Route("/hr/goalstatuses", "GET")
+// @Api(Description="GetAllGoalStatusesService")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class FetchGoalStatuses implements IReturn<VantagePagedResponse<TGoalStatus>>, IPageable, ISortable
+{
+    public id: number;
+    public description: string;
+    public withReferences: boolean;
+    public page: number;
+    public pageSize: number;
+    public sortDirection: string;
+    public sortField: string;
+
+    public constructor(init?: Partial<FetchGoalStatuses>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TGoalStatus>(); }
+    public getTypeName() { return 'FetchGoalStatuses'; }
+}
+
+// @Route("/hr/goalstatus/{Id}", "GET")
+export class FetchGoalStatus implements IReturn<VantageResponse<TGoalStatus>>, IGet
+{
+    public id: number;
+    public description: string;
+
+    public constructor(init?: Partial<FetchGoalStatus>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TGoalStatus>(); }
+    public getTypeName() { return 'FetchGoalStatus'; }
+}
+
+// @Route("/hr/goalstatus", "POST")
+export class AddGoalStatus implements IReturn<VantageResponse<TGoalStatus>>, IPost
+{
+    public description: string;
+
+    public constructor(init?: Partial<AddGoalStatus>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TGoalStatus>(); }
+    public getTypeName() { return 'AddGoalStatus'; }
+}
+
+// @Route("/hr/goalstatus/update/{Id}", "PUT")
+// @Route("/hr/goalstatus", "POST")
+export class UpdateGoalStatus extends AddGoalStatus implements IReturn<VantageResponse<TGoalStatus>>, IPost, IPut
+{
+    public id: number;
+
+    public constructor(init?: Partial<UpdateGoalStatus>) { super(init); (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TGoalStatus>(); }
+    public getTypeName() { return 'UpdateGoalStatus'; }
+}
+
+// @Route("/hr/goalstatus/{Id}", "DELETE")
+export class RemoveGoalStatus implements IReturn<VantageResponse<TGoalStatus>>, IDelete
+{
+    public id: number;
+
+    public constructor(init?: Partial<RemoveGoalStatus>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TGoalStatus>(); }
+    public getTypeName() { return 'RemoveGoalStatus'; }
+}
+
+/**
+* GetAllService
+*/
+// @Route("/hr/comments", "GET")
+// @Api(Description="GetAllService")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class FetchComments implements IReturn<VantagePagedResponse<TComment>>, IPageable, ISortable
+{
+    public id: number;
+    public coreBehaviourId: number;
+    public kpiId: number;
+    public description: string;
+    public userWithManagerId: number;
+    public withReferences: boolean;
+    public page: number;
+    public pageSize: number;
+    public sortDirection: string;
+    public sortField: string;
+
+    public constructor(init?: Partial<FetchComments>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TComment>(); }
+    public getTypeName() { return 'FetchComments'; }
+}
+
+// @Route("/hr/comments/{Id}", "GET")
+export class FetchComment implements IReturn<VantageResponse<TComment>>, IGet
+{
+    public id: number;
+    public withReferences: boolean;
+
+    public constructor(init?: Partial<FetchComment>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TComment>(); }
+    public getTypeName() { return 'FetchComment'; }
+}
+
+// @Route("/hr/comments", "POST")
+export class AddComment implements IReturn<VantageResponse<TComment>>, IPost
+{
+    public coreBehaviourId: number;
+    public kpiId: number;
+    public description: string;
+    public userWithManagerId: number;
+
+    public constructor(init?: Partial<AddComment>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TComment>(); }
+    public getTypeName() { return 'AddComment'; }
+}
+
+// @Route("/hr/comments/update/{Id}", "PUT")
+// @Route("/hr/comments", "POST")
+export class UpdateComment extends AddComment implements IReturn<VantageResponse<TComment>>, IPost, IPut
+{
+    public id: number;
+
+    public constructor(init?: Partial<UpdateComment>) { super(init); (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TComment>(); }
+    public getTypeName() { return 'UpdateComment'; }
+}
+
+// @Route("/hr/comments/{Id}", "DELETE")
+export class RemoveComment implements IReturn<VantageResponse<TComment>>, IDelete
+{
+    public id: number;
+
+    public constructor(init?: Partial<RemoveComment>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TComment>(); }
+    public getTypeName() { return 'RemoveComment'; }
+}
+
+/**
+* GetAllKpisService
+*/
+// @Route("/hr/kpis", "GET")
+// @Api(Description="GetAllKpisService")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class FetchKpis implements IReturn<VantagePagedResponse<TKpi>>, IPageable, ISortable
+{
+    public id: number;
+    public withReferences: boolean;
+    public page: number;
+    public pageSize: number;
+    public sortDirection: string;
+    public sortField: string;
+
+    public constructor(init?: Partial<FetchKpis>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TKpi>(); }
+    public getTypeName() { return 'FetchKpis'; }
+}
+
+// @Route("/hr/kpis/{Id}", "GET")
+export class FetchKpi implements IReturn<VantageResponse<TKpi>>, IGet
+{
+    public id: number;
+
+    public constructor(init?: Partial<FetchKpi>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TKpi>(); }
+    public getTypeName() { return 'FetchKpi'; }
+}
+
+// @Route("/hr/kpis", "POST")
+export class AddKpi implements IReturn<VantageResponse<TKpi>>, IPost
+{
+    public hrGoalId: number;
+    public description: string;
+    public measureBy: string;
+    public weighting: number;
+    public dueDate: string;
+    public managerRatingId: number;
+    public employeeRatingId: number;
+    public agreedRatingId: number;
+    public managerComment: string;
+    public employeeComment: string;
+
+    public constructor(init?: Partial<AddKpi>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TKpi>(); }
+    public getTypeName() { return 'AddKpi'; }
+}
+
+// @Route("/hr/kpis/update/{Id}", "PUT")
+// @Route("/hr/kpis", "POST")
+export class UpdateKpi extends AddKpi implements IReturn<VantageResponse<TKpi>>, IPost, IPut
+{
+    public id: number;
+
+    public constructor(init?: Partial<UpdateKpi>) { super(init); (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TKpi>(); }
+    public getTypeName() { return 'UpdateKpi'; }
+}
+
+// @Route("/hr/kpis/{Id}", "DELETE")
+export class RemoveKpi implements IReturn<VantageResponse<TKpi>>, IDelete
+{
+    public id: number;
+
+    public constructor(init?: Partial<RemoveKpi>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TKpi>(); }
+    public getTypeName() { return 'RemoveKpi'; }
+}
+
+/**
+* GetAllNotesService
+*/
+// @Route("/hr/notes", "GET")
+// @Api(Description="GetAllNotesService")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class FetchNotes implements IReturn<VantagePagedResponse<TNote>>, IPageable, ISortable
+{
+    public id: number;
+    public kpiId: number;
+    public coreBehaviourId: number;
+    public noteText: string;
+    public userWithManagerId: number;
+    public withReferences: boolean;
+    public page: number;
+    public pageSize: number;
+    public sortDirection: string;
+    public sortField: string;
+
+    public constructor(init?: Partial<FetchNotes>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TNote>(); }
+    public getTypeName() { return 'FetchNotes'; }
+}
+
+// @Route("/hr/notes/{Id}", "GET")
+export class FetchNote implements IReturn<VantageResponse<TNote>>, IGet
+{
+    public id: number;
+
+    public constructor(init?: Partial<FetchNote>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TNote>(); }
+    public getTypeName() { return 'FetchNote'; }
+}
+
+// @Route("/hr/notes", "POST")
+export class AddNote implements IReturn<VantageResponse<TNote>>, IPost
+{
+    public kpiId: number;
+    public coreBehaviourId: number;
+    public noteText: string;
+    public userWithManagerId: number;
+
+    public constructor(init?: Partial<AddNote>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TNote>(); }
+    public getTypeName() { return 'AddNote'; }
+}
+
+// @Route("/hr/notes/update/{Id}", "PUT")
+// @Route("/hr/notes", "POST")
+export class UpdateNote extends AddNote implements IReturn<VantageResponse<TNote>>, IPost, IPut
+{
+    public id: number;
+
+    public constructor(init?: Partial<UpdateNote>) { super(init); (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TNote>(); }
+    public getTypeName() { return 'UpdateNote'; }
+}
+
+// @Route("/hr/notes/{Id}", "DELETE")
+export class RemoveNote implements IReturn<VantageResponse<TNote>>, IDelete
+{
+    public id: number;
+
+    public constructor(init?: Partial<RemoveNote>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TNote>(); }
+    public getTypeName() { return 'RemoveNote'; }
+}
+
+/**
+* GetAllRatingsService
+*/
+// @Route("/hr/admin/ratings", "GET")
+// @Api(Description="GetAllRatingsService")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class FetchRatings implements IReturn<VantagePagedResponse<TRating>>, IPageable, ISortable
+{
+    public id: number;
+    public description: string;
+    public value: number;
+    public isDeleted: boolean;
+    public withReferences: boolean;
+    public page: number;
+    public pageSize: number;
+    public sortDirection: string;
+    public sortField: string;
+
+    public constructor(init?: Partial<FetchRatings>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TRating>(); }
+    public getTypeName() { return 'FetchRatings'; }
+}
+
+// @Route("/hr/admin/ratings/{Id}", "GET")
+export class FetchRating implements IReturn<VantageResponse<TRating>>, IGet
+{
+    public id: number;
+    public description: string;
+    public value: number;
+    public isDeleted: boolean;
+
+    public constructor(init?: Partial<FetchRating>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TRating>(); }
+    public getTypeName() { return 'FetchRating'; }
+}
+
+// @Route("/hr/admin/ratings", "POST")
+export class AddRating implements IReturn<VantageResponse<TRating>>, IPost
+{
+    public description: string;
+    public value: number;
+    public isDeleted: boolean;
+
+    public constructor(init?: Partial<AddRating>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TRating>(); }
+    public getTypeName() { return 'AddRating'; }
+}
+
+// @Route("/hr/admin/ratings/update/{Id}", "PUT")
+// @Route("/hr/admin/ratings", "POST")
+export class UpdateRating extends AddRating implements IReturn<VantageResponse<TRating>>, IPost, IPut
+{
+    public id: number;
+
+    public constructor(init?: Partial<UpdateRating>) { super(init); (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TRating>(); }
+    public getTypeName() { return 'UpdateRating'; }
+}
+
+// @Route("/hr/admin/ratings/{Id}", "DELETE")
+export class RemoveRating implements IReturn<VantageResponse<TRating>>, IDelete
+{
+    public id: number;
+
+    public constructor(init?: Partial<RemoveRating>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TRating>(); }
+    public getTypeName() { return 'RemoveRating'; }
+}
+
+/**
+* GetAllManagersService
+*/
+// @Route("/hr/managers", "GET")
+// @Api(Description="GetAllManagersService")
+// @ApiResponse(Description="Your request was not understood", StatusCode="400")
+// @ApiResponse(Description="Oops, something broke", StatusCode="500")
+export class FetchUserWithManagers implements IReturn<VantagePagedResponse<TUserWithManager>>, IPageable, ISortable
+{
+    public id: number;
+    public managerId: number;
+    public employeeId: number;
+    public withReferences: boolean;
+    public page: number;
+    public pageSize: number;
+    public sortDirection: string;
+    public sortField: string;
+
+    public constructor(init?: Partial<FetchUserWithManagers>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantagePagedResponse<TUserWithManager>(); }
+    public getTypeName() { return 'FetchUserWithManagers'; }
+}
+
+// @Route("/hr/user/{Id}", "GET")
+export class FetchUserWithManager implements IReturn<VantageResponse<TUserWithManager>>, IGet
+{
+    public id: number;
+    public managerId: number;
+    public employeeId: number;
+
+    public constructor(init?: Partial<FetchUserWithManager>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TUserWithManager>(); }
+    public getTypeName() { return 'FetchUserWithManager'; }
+}
+
+// @Route("/hr/managers", "POST")
+export class AddUserWithManager implements IReturn<VantageResponse<TUserWithManager>>, IPost
+{
+    public managerId: number;
+    public employeeId: number;
+
+    public constructor(init?: Partial<AddUserWithManager>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TUserWithManager>(); }
+    public getTypeName() { return 'AddUserWithManager'; }
+}
+
+// @Route("/hr/user/update/{Id}", "PUT")
+// @Route("/hr/managers", "POST")
+export class UpdateUserWithManager extends AddUserWithManager implements IReturn<VantageResponse<TUserWithManager>>, IPost, IPut
+{
+    public id: number;
+
+    public constructor(init?: Partial<UpdateUserWithManager>) { super(init); (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TUserWithManager>(); }
+    public getTypeName() { return 'UpdateUserWithManager'; }
+}
+
+// @Route("/hr/user/{Id}", "DELETE")
+export class RemoveUserWithManager implements IReturn<VantageResponse<TUserWithManager>>, IDelete
+{
+    public id: number;
+
+    public constructor(init?: Partial<RemoveUserWithManager>) { (Object as any).assign(this, init); }
+    public createResponse() { return new VantageResponse<TUserWithManager>(); }
+    public getTypeName() { return 'RemoveUserWithManager'; }
+}
+
+// @Route("/auth")
+// @Route("/auth/{provider}")
+// @Route("/authenticate")
+// @Route("/authenticate/{provider}")
+// @DataContract
+export class Authenticate implements IReturn<AuthenticateResponse>, IPost
+{
+    // @DataMember(Order=1)
+    public provider: string;
+
+    // @DataMember(Order=2)
+    public state: string;
+
+    // @DataMember(Order=3)
+    public oauth_token: string;
+
+    // @DataMember(Order=4)
+    public oauth_verifier: string;
+
+    // @DataMember(Order=5)
+    public userName: string;
+
+    // @DataMember(Order=6)
+    public password: string;
+
+    // @DataMember(Order=7)
+    public rememberMe: boolean;
+
+    // @DataMember(Order=8)
+    public continue: string;
+
+    // @DataMember(Order=9)
+    public errorView: string;
+
+    // @DataMember(Order=10)
+    public nonce: string;
+
+    // @DataMember(Order=11)
+    public uri: string;
+
+    // @DataMember(Order=12)
+    public response: string;
+
+    // @DataMember(Order=13)
+    public qop: string;
+
+    // @DataMember(Order=14)
+    public nc: string;
+
+    // @DataMember(Order=15)
+    public cnonce: string;
+
+    // @DataMember(Order=16)
+    public useTokenCookie: boolean;
+
+    // @DataMember(Order=17)
+    public accessToken: string;
+
+    // @DataMember(Order=18)
+    public accessTokenSecret: string;
+
+    // @DataMember(Order=19)
+    public scope: string;
+
+    // @DataMember(Order=20)
+    public meta: { [index: string]: string; };
+
+    public constructor(init?: Partial<Authenticate>) { (Object as any).assign(this, init); }
+    public createResponse() { return new AuthenticateResponse(); }
+    public getTypeName() { return 'Authenticate'; }
+}
+
+// @Route("/assignroles")
+// @DataContract
+export class AssignRoles implements IReturn<AssignRolesResponse>, IPost
+{
+    // @DataMember(Order=1)
+    public userName: string;
+
+    // @DataMember(Order=2)
+    public permissions: string[];
+
+    // @DataMember(Order=3)
+    public roles: string[];
+
+    // @DataMember(Order=4)
+    public meta: { [index: string]: string; };
+
+    public constructor(init?: Partial<AssignRoles>) { (Object as any).assign(this, init); }
+    public createResponse() { return new AssignRolesResponse(); }
+    public getTypeName() { return 'AssignRoles'; }
+}
+
+// @Route("/unassignroles")
+// @DataContract
+export class UnAssignRoles implements IReturn<UnAssignRolesResponse>, IPost
+{
+    // @DataMember(Order=1)
+    public userName: string;
+
+    // @DataMember(Order=2)
+    public permissions: string[];
+
+    // @DataMember(Order=3)
+    public roles: string[];
+
+    // @DataMember(Order=4)
+    public meta: { [index: string]: string; };
+
+    public constructor(init?: Partial<UnAssignRoles>) { (Object as any).assign(this, init); }
+    public createResponse() { return new UnAssignRolesResponse(); }
+    public getTypeName() { return 'UnAssignRoles'; }
+}
+
+// @Route("/register")
+// @DataContract
+export class Register implements IReturn<RegisterResponse>, IPost
+{
+    // @DataMember(Order=1)
+    public userName: string;
+
+    // @DataMember(Order=2)
+    public firstName: string;
+
+    // @DataMember(Order=3)
+    public lastName: string;
+
+    // @DataMember(Order=4)
+    public displayName: string;
+
+    // @DataMember(Order=5)
+    public email: string;
+
+    // @DataMember(Order=6)
+    public password: string;
+
+    // @DataMember(Order=7)
+    public confirmPassword: string;
+
+    // @DataMember(Order=8)
+    public autoLogin: boolean;
+
+    // @DataMember(Order=9)
+    public continue: string;
+
+    // @DataMember(Order=10)
+    public errorView: string;
+
+    // @DataMember(Order=11)
+    public meta: { [index: string]: string; };
+
+    public constructor(init?: Partial<Register>) { (Object as any).assign(this, init); }
+    public createResponse() { return new RegisterResponse(); }
+    public getTypeName() { return 'Register'; }
+}
+
+// @Route("/session-to-token")
+// @DataContract
+export class ConvertSessionToToken implements IReturn<ConvertSessionToTokenResponse>, IPost
+{
+    // @DataMember(Order=1)
+    public preserveSession: boolean;
+
+    // @DataMember(Order=2)
+    public meta: { [index: string]: string; };
+
+    public constructor(init?: Partial<ConvertSessionToToken>) { (Object as any).assign(this, init); }
+    public createResponse() { return new ConvertSessionToTokenResponse(); }
+    public getTypeName() { return 'ConvertSessionToToken'; }
+}
+
+// @Route("/access-token")
+// @DataContract
+export class GetAccessToken implements IReturn<GetAccessTokenResponse>, IPost
+{
+    // @DataMember(Order=1)
+    public refreshToken: string;
+
+    // @DataMember(Order=2)
+    public useTokenCookie: boolean;
+
+    // @DataMember(Order=3)
+    public meta: { [index: string]: string; };
+
+    public constructor(init?: Partial<GetAccessToken>) { (Object as any).assign(this, init); }
+    public createResponse() { return new GetAccessTokenResponse(); }
+    public getTypeName() { return 'GetAccessToken'; }
+}
+

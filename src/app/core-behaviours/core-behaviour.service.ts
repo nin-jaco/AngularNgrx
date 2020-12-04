@@ -1,9 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastService } from '@app/core';
+import { TCoreBehaviour } from '@app/core/model/TCoreBehaviour';
 import { throwError as observableThrowError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { CoreBehaviour, ToastService } from '../core';
 // import { CoreBehavioursModule } from './coreBehaviours.module';
 
 const api = 'https://localhost:44324/api';
@@ -23,12 +24,10 @@ export class CoreBehaviourService {
   getAll() {
     const url = `${api}/hr/corebehaviours`;
     const msg = 'CoreBehaviours retrieved successfully!';
-    return this.http
-      .get<CoreBehaviour[]>(url)
-      .pipe(
-        tap(() => this.toastService.openSnackBar(msg, 'GET')),
-        catchError(this.handleError)
-      );
+    return this.http.get<TCoreBehaviour[]>(url).pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'GET')),
+      catchError(this.handleError)
+    );
   }
 
   private handleError(res: HttpErrorResponse) {
@@ -36,32 +35,44 @@ export class CoreBehaviourService {
     return observableThrowError(res.error || 'Server error');
   }
 
-  delete(coreBehaviour: CoreBehaviour) {
+  delete(coreBehaviour: TCoreBehaviour) {
     return this.http
       .delete(`${api}/hr/corebehaviours/${coreBehaviour.id}`)
       .pipe(
         tap(() =>
-          this.toastService.openSnackBar(`CoreBehaviour ${coreBehaviour.id} deleted`, 'DELETE')
+          this.toastService.openSnackBar(
+            `CoreBehaviour ${coreBehaviour.id} deleted`,
+            'DELETE'
+          )
         )
       );
   }
 
-  add(coreBehaviour: CoreBehaviour) {
+  add(coreBehaviour: TCoreBehaviour) {
     return this.http
-      .post<CoreBehaviour>(`${api}/hr/corebehaviours/`, coreBehaviour)
+      .post<TCoreBehaviour>(`${api}/hr/corebehaviours/`, coreBehaviour)
       .pipe(
         tap(() =>
-          this.toastService.openSnackBar(`CoreBehaviour ${coreBehaviour.id} added`, 'POST')
+          this.toastService.openSnackBar(
+            `CoreBehaviour ${coreBehaviour.id} added`,
+            'POST'
+          )
         )
       );
   }
 
-  update(coreBehaviour: CoreBehaviour) {
+  update(coreBehaviour: TCoreBehaviour) {
     return this.http
-      .put<CoreBehaviour>(`${api}/hr/corebehaviours/${coreBehaviour.id}`, coreBehaviour)
+      .put<TCoreBehaviour>(
+        `${api}/hr/corebehaviours/${coreBehaviour.id}`,
+        coreBehaviour
+      )
       .pipe(
         tap(() =>
-          this.toastService.openSnackBar(`CoreBehaviour ${coreBehaviour.id} updated`, 'PUT')
+          this.toastService.openSnackBar(
+            `CoreBehaviour ${coreBehaviour.id} updated`,
+            'PUT'
+          )
         )
       );
   }

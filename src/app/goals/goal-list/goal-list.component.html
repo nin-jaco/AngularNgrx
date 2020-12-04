@@ -5,14 +5,38 @@
   <mat-card-content>
     <ul class="goals">
       <li *ngFor="let goal of goals; trackBy: byId" class="item-container">
-        <button mat-button mat-suffix mat-icon-button color="accent" class="delete-button" aria-label="Delete" (click)="deleteGoal(goal)"
-          matTooltip="Delete the goal">
+        <button
+          mat-button
+          mat-suffix
+          mat-icon-button
+          color="accent"
+          class="delete-button"
+          aria-label="Delete"
+          (click)="deleteGoal(goal)"
+          matTooltip="Delete the goal"
+        >
           <mat-icon>delete</mat-icon>
         </button>
-        <div class="selectable-item" [class.selected]="goal === selectedGoal" (click)="select(goal)">
-          <div class="badge">{{goal.id}}</div>
+        <div
+          class="selectable-item"
+          [class.selected]="goal === selectedGoal"
+          (click)="select(goal)"
+        >
+          <div class="badge">{{ goal.id }}</div>
           <div class="item-text">
-            <div class="finalScore">{{goal.finalScore}}</div>
+            <div class="finalScore">{{ goal.finalScore }}</div>
+          </div>
+          <div class="item-text">
+            <div class="name">{{ goal.name }}</div>
+          </div>
+          <div class="item-text">
+            <div class="startDate">{{ goal.startDate }}</div>
+          </div>
+          <div class="item-text">
+            <div class="endDate">{{ goal.endDate }}</div>
+          </div>
+          <div class="item-text">
+            <div class="reviewDate">{{ goal.reviewDate }}</div>
           </div>
         </div>
       </li>

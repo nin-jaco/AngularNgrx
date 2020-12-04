@@ -10,7 +10,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Rating } from '../../core';
+import { TRating } from '@app/core/model/TRating';
 
 @Component({
   selector: 'app-rating-detail',
@@ -19,10 +19,10 @@ import { Rating } from '../../core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RatingDetailComponent implements OnChanges {
-  @Input() rating: Rating;
+  @Input() rating: TRating;
   @Output() unselect = new EventEmitter<string>();
-  @Output() add = new EventEmitter<Rating>();
-  @Output() update = new EventEmitter<Rating>();
+  @Output() add = new EventEmitter<TRating>();
+  @Output() update = new EventEmitter<TRating>();
 
   @ViewChild('name', { static: true }) nameElement: ElementRef;
 

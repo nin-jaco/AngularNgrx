@@ -1,9 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastService } from '@app/core';
+import { TKpi } from '@app/core/model/TKpi';
 import { throwError as observableThrowError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { Kpi, ToastService } from '../core';
 // import { KpisModule } from './kpis.module';
 
 const api = 'https://localhost:44324/api';
@@ -23,12 +24,10 @@ export class KpiService {
   getAll() {
     const url = `${api}/hr/kpis`;
     const msg = 'Kpis retrieved successfully!';
-    return this.http
-      .get<Kpi[]>(url)
-      .pipe(
-        tap(() => this.toastService.openSnackBar(msg, 'GET')),
-        catchError(this.handleError)
-      );
+    return this.http.get<TKpi[]>(url).pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'GET')),
+      catchError(this.handleError)
+    );
   }
 
   private handleError(res: HttpErrorResponse) {
@@ -36,7 +35,7 @@ export class KpiService {
     return observableThrowError(res.error || 'Server error');
   }
 
-  delete(kpi: Kpi) {
+  delete(kpi: TKpi) {
     return this.http
       .delete(`${api}/hr/kpis/${kpi.id}`)
       .pipe(
@@ -46,19 +45,17 @@ export class KpiService {
       );
   }
 
-  add(kpi: Kpi) {
+  add(kpi: TKpi) {
     return this.http
-      .post<Kpi>(`${api}/hr/kpis/`, kpi)
+      .post<TKpi>(`${api}/hr/kpis/`, kpi)
       .pipe(
-        tap(() =>
-          this.toastService.openSnackBar(`Kpi ${kpi.id} added`, 'POST')
-        )
+        tap(() => this.toastService.openSnackBar(`Kpi ${kpi.id} added`, 'POST'))
       );
   }
 
-  update(kpi: Kpi) {
+  update(kpi: TKpi) {
     return this.http
-      .put<Kpi>(`${api}/hr/kpis/${kpi.id}`, kpi)
+      .put<TKpi>(`${api}/hr/kpis/${kpi.id}`, kpi)
       .pipe(
         tap(() =>
           this.toastService.openSnackBar(`Kpi ${kpi.id} updated`, 'PUT')

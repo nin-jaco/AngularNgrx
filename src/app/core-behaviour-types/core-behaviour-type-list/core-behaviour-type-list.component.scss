@@ -1,9 +1,0 @@
-@import '../../../styles/mixin';
-
-.coreBehaviourTypes {
-  @include item-list;
-}
-
-.mat-card {
-  @include mat-card-layout;
-}

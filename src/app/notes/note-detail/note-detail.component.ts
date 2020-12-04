@@ -10,7 +10,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Note } from '../../core';
+import { TNote } from '@app/core/model/TNote';
 
 @Component({
   selector: 'app-note-detail',
@@ -19,10 +19,10 @@ import { Note } from '../../core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NoteDetailComponent implements OnChanges {
-  @Input() note: Note;
+  @Input() note: TNote;
   @Output() unselect = new EventEmitter<string>();
-  @Output() add = new EventEmitter<Note>();
-  @Output() update = new EventEmitter<Note>();
+  @Output() add = new EventEmitter<TNote>();
+  @Output() update = new EventEmitter<TNote>();
 
   @ViewChild('name', { static: true }) nameElement: ElementRef;
 

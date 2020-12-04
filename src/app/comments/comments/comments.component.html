@@ -1,0 +1,52 @@
+<div class="control-panel">
+  <div class="button-panel">
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="getComments()"
+      matTooltip="Refresh the view"
+    >
+      Refresh
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="enableAddMode()"
+      *ngIf="!selected"
+      matTooltip="Add a new item"
+    >
+      Add
+    </button>
+  </div>
+</div>
+<div class="content-container">
+  <div class="list-container">
+    <div *ngIf="comments$ | async as comments">
+      <mat-spinner
+        *ngIf="loading$ | async; else commentList"
+        mode="indeterminate"
+        color="accent"
+      ></mat-spinner>
+      <ng-template #commentList>
+        <app-comment-list
+          [comments]="comments"
+          [selectedComment]="selected"
+          (deleted)="delete($event)"
+          (selected)="select($event)"
+        ></app-comment-list>
+      </ng-template>
+    </div>
+  </div>
+  <div class="detail-container">
+    <app-comment-detail
+      *ngIf="selected"
+      [hero]="selected"
+      (unselect)="close()"
+      (add)="add($event)"
+      (update)="update($event)"
+    >
+    </app-comment-detail>
+  </div>
+</div>

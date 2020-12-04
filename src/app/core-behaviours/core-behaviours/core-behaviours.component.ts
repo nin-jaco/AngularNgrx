@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TCoreBehaviour } from '@app/core/model/TCoreBehaviour';
 import { finalize } from 'rxjs/operators';
-import { CoreBehaviour } from '../../core';
 import { CoreBehaviourService } from '../core-behaviour.service';
 
 @Component({
@@ -9,8 +9,8 @@ import { CoreBehaviourService } from '../core-behaviour.service';
   styleUrls: ['./core-behaviours.component.scss']
 })
 export class CoreBehavioursComponent implements OnInit {
-  selected: CoreBehaviour;
-  coreBehaviours: CoreBehaviour[];
+  selected: TCoreBehaviour;
+  coreBehaviours: TCoreBehaviour[];
   loading: boolean;
 
   constructor(private coreBehaviourService: CoreBehaviourService) {}
@@ -19,26 +19,32 @@ export class CoreBehavioursComponent implements OnInit {
     this.getCoreBehaviours();
   }
 
-  add(coreBehaviour: CoreBehaviour) {
+  add(coreBehaviour: TCoreBehaviour) {
     this.loading = true;
     this.coreBehaviourService
       .add(coreBehaviour)
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe(addedCoreBehaviour => (this.coreBehaviours = this.coreBehaviours.concat(addedCoreBehaviour)));
+      .subscribe(
+        addedCoreBehaviour =>
+          (this.coreBehaviours = this.coreBehaviours.concat(addedCoreBehaviour))
+      );
   }
 
   close() {
     this.selected = null;
   }
 
-  delete(coreBehaviour: CoreBehaviour) {
+  delete(coreBehaviour: TCoreBehaviour) {
     this.loading = true;
     this.close();
     this.coreBehaviourService
       .delete(coreBehaviour)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
-        () => (this.coreBehaviours = this.coreBehaviours.filter(h => h.id !== coreBehaviour.id))
+        () =>
+          (this.coreBehaviours = this.coreBehaviours.filter(
+            h => h.id !== coreBehaviour.id
+          ))
       );
   }
 
@@ -55,18 +61,20 @@ export class CoreBehavioursComponent implements OnInit {
     this.close();
   }
 
-  select(coreBehaviour: CoreBehaviour) {
+  select(coreBehaviour: TCoreBehaviour) {
     this.selected = coreBehaviour;
   }
 
-  update(coreBehaviour: CoreBehaviour) {
+  update(coreBehaviour: TCoreBehaviour) {
     this.loading = true;
     this.coreBehaviourService
       .update(coreBehaviour)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         () =>
-          (this.coreBehaviours = this.coreBehaviours.map(h => (h.id === coreBehaviour.id ? coreBehaviour : h)))
+          (this.coreBehaviours = this.coreBehaviours.map(h =>
+            h.id === coreBehaviour.id ? coreBehaviour : h
+          ))
       );
   }
 }

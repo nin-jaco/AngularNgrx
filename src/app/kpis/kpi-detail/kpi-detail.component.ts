@@ -10,7 +10,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Kpi } from '../../core';
+import { TKpi } from '@app/core/model/TKpi';
 
 @Component({
   selector: 'app-kpi-detail',
@@ -19,10 +19,10 @@ import { Kpi } from '../../core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class KpiDetailComponent implements OnChanges {
-  @Input() kpi: Kpi;
+  @Input() kpi: TKpi;
   @Output() unselect = new EventEmitter<string>();
-  @Output() add = new EventEmitter<Kpi>();
-  @Output() update = new EventEmitter<Kpi>();
+  @Output() add = new EventEmitter<TKpi>();
+  @Output() update = new EventEmitter<TKpi>();
 
   @ViewChild('name', { static: true }) nameElement: ElementRef;
 

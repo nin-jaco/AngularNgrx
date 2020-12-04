@@ -1,9 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { TGoal } from '@app/core/model/TGoal';
 import { throwError as observableThrowError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { Goal, ToastService } from '../core';
+import { ToastService } from '../core';
 // import { GoalsModule } from './goals.module';
 
 const api = 'https://localhost:44324/api';
@@ -23,12 +24,10 @@ export class GoalService {
   getAll() {
     const url = `${api}/hr/goals`;
     const msg = 'Goals retrieved successfully!';
-    return this.http
-      .get<Goal[]>(url)
-      .pipe(
-        tap(() => this.toastService.openSnackBar(msg, 'GET')),
-        catchError(this.handleError)
-      );
+    return this.http.get<TGoal[]>(url).pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'GET')),
+      catchError(this.handleError)
+    );
   }
 
   private handleError(res: HttpErrorResponse) {
@@ -36,32 +35,32 @@ export class GoalService {
     return observableThrowError(res.error || 'Server error');
   }
 
-  delete(goal: Goal) {
+  delete(goal: TGoal) {
     return this.http
       .delete(`${api}/hr/goals/${goal.id}`)
       .pipe(
         tap(() =>
-          this.toastService.openSnackBar(`Goal ${goal.id} deleted`, 'DELETE')
+          this.toastService.openSnackBar(`Goal ${goal.name} deleted`, 'DELETE')
         )
       );
   }
 
-  add(goal: Goal) {
+  add(goal: TGoal) {
     return this.http
-      .post<Goal>(`${api}/hr/goals/`, goal)
+      .post<TGoal>(`${api}/hr/goals/`, goal)
       .pipe(
         tap(() =>
-          this.toastService.openSnackBar(`Goal ${goal.id} added`, 'POST')
+          this.toastService.openSnackBar(`Goal ${goal.name} added`, 'POST')
         )
       );
   }
 
-  update(goal: Goal) {
+  update(goal: TGoal) {
     return this.http
-      .put<Goal>(`${api}/hr/goals/${goal.id}`, goal)
+      .put<TGoal>(`${api}/hr/goals/${goal.name}`, goal)
       .pipe(
         tap(() =>
-          this.toastService.openSnackBar(`Goal ${goal.id} updated`, 'PUT')
+          this.toastService.openSnackBar(`Goal ${goal.name} updated`, 'PUT')
         )
       );
   }

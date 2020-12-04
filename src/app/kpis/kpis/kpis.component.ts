@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TKpi } from '@app/core/model/TKpi';
 import { finalize } from 'rxjs/operators';
-import { Kpi } from '../../core';
 import { KpiService } from '../kpi.service';
 
 @Component({
@@ -9,8 +9,8 @@ import { KpiService } from '../kpi.service';
   styleUrls: ['./kpis.component.scss']
 })
 export class KpisComponent implements OnInit {
-  selected: Kpi;
-  kpis: Kpi[];
+  selected: TKpi;
+  kpis: TKpi[];
   loading: boolean;
 
   constructor(private kpiService: KpiService) {}
@@ -19,7 +19,7 @@ export class KpisComponent implements OnInit {
     this.getKpis();
   }
 
-  add(kpi: Kpi) {
+  add(kpi: TKpi) {
     this.loading = true;
     this.kpiService
       .add(kpi)
@@ -31,15 +31,13 @@ export class KpisComponent implements OnInit {
     this.selected = null;
   }
 
-  delete(kpi: Kpi) {
+  delete(kpi: TKpi) {
     this.loading = true;
     this.close();
     this.kpiService
       .delete(kpi)
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe(
-        () => (this.kpis = this.kpis.filter(h => h.id !== kpi.id))
-      );
+      .subscribe(() => (this.kpis = this.kpis.filter(h => h.id !== kpi.id)));
   }
 
   enableAddMode() {
@@ -55,18 +53,17 @@ export class KpisComponent implements OnInit {
     this.close();
   }
 
-  select(kpi: Kpi) {
+  select(kpi: TKpi) {
     this.selected = kpi;
   }
 
-  update(kpi: Kpi) {
+  update(kpi: TKpi) {
     this.loading = true;
     this.kpiService
       .update(kpi)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
-        () =>
-          (this.kpis = this.kpis.map(h => (h.id === kpi.id ? kpi : h)))
+        () => (this.kpis = this.kpis.map(h => (h.id === kpi.id ? kpi : h)))
       );
   }
 }

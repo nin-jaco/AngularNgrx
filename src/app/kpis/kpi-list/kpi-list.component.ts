@@ -6,7 +6,8 @@ import {
   Output
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Kpi, ModalComponent } from '../../core';
+import { ModalComponent } from '@app/core';
+import { TKpi } from '@app/core/model/TKpi';
 
 @Component({
   selector: 'app-kpi-list',
@@ -15,22 +16,22 @@ import { Kpi, ModalComponent } from '../../core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class KpiListComponent {
-  @Input() kpis: Kpi[];
-  @Input() selectedKpi: Kpi;
-  @Output() deleted = new EventEmitter<Kpi>();
-  @Output() selected = new EventEmitter<Kpi>();
+  @Input() kpis: TKpi[];
+  @Input() selectedKpi: TKpi;
+  @Output() deleted = new EventEmitter<TKpi>();
+  @Output() selected = new EventEmitter<TKpi>();
 
   constructor(public dialog: MatDialog) {}
 
-  byId(kpi: Kpi) {
+  byId(kpi: TKpi) {
     return kpi.id;
   }
 
-  select(kpi: Kpi) {
+  select(kpi: TKpi) {
     this.selected.emit(kpi);
   }
 
-  deleteKpi(kpi: Kpi) {
+  deleteKpi(kpi: TKpi) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;

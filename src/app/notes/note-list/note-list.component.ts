@@ -6,7 +6,8 @@ import {
   Output
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Note, ModalComponent } from '../../core';
+import { ModalComponent } from '@app/core';
+import { TNote } from '@app/core/model/TNote';
 
 @Component({
   selector: 'app-note-list',
@@ -15,22 +16,22 @@ import { Note, ModalComponent } from '../../core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NoteListComponent {
-  @Input() notes: Note[];
-  @Input() selectedNote: Note;
-  @Output() deleted = new EventEmitter<Note>();
-  @Output() selected = new EventEmitter<Note>();
+  @Input() notes: TNote[];
+  @Input() selectedNote: TNote;
+  @Output() deleted = new EventEmitter<TNote>();
+  @Output() selected = new EventEmitter<TNote>();
 
   constructor(public dialog: MatDialog) {}
 
-  byId(note: Note) {
+  byId(note: TNote) {
     return note.id;
   }
 
-  select(note: Note) {
+  select(note: TNote) {
     this.selected.emit(note);
   }
 
-  deleteNote(note: Note) {
+  deleteNote(note: TNote) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;

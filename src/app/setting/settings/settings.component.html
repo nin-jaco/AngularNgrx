@@ -1,0 +1,52 @@
+<div class="control-panel">
+  <div class="button-panel">
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="getSettings()"
+      matTooltip="Refresh the settings"
+    >
+      Refresh
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="enableAddMode()"
+      *ngIf="!selected"
+      matTooltip="Add a new setting"
+    >
+      Add
+    </button>
+  </div>
+</div>
+<div class="content-container">
+  <div class="list-container">
+    <div *ngIf="settings">
+      <mat-spinner
+        *ngIf="loading; else settingList"
+        mode="indeterminate"
+        color="accent"
+      ></mat-spinner>
+      <ng-template #settingList>
+        <app-setting-list
+          [settings]="settings"
+          [selectedSetting]="selected"
+          (deleted)="delete($event)"
+          (selected)="select($event)"
+        ></app-setting-list>
+      </ng-template>
+    </div>
+  </div>
+  <div class="detail-container">
+    <app-setting-detail
+      *ngIf="selected"
+      [setting]="selected"
+      (unselect)="close()"
+      (add)="add($event)"
+      (update)="update($event)"
+    >
+    </app-setting-detail>
+  </div>
+</div>

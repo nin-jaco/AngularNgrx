@@ -1,0 +1,39 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Settings</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ul class="settings">
+      <li
+        *ngFor="let setting of settings; trackBy: byId"
+        class="item-container"
+      >
+        <button
+          mat-button
+          mat-suffix
+          mat-icon-button
+          color="accent"
+          class="delete-button"
+          aria-label="Delete"
+          (click)="deleteSetting(setting)"
+          matTooltip="Delete the setting"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+        <div
+          class="selectable-item"
+          [class.selected]="setting === selectedSetting"
+          (click)="select(setting)"
+        >
+          <div class="badge">{{ setting.id }}</div>
+          <div class="item-text">
+            <div class="name">{{ setting.name }}</div>
+          </div>
+          <div class="item-text">
+            <div class="value">{{ setting.value }}</div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>

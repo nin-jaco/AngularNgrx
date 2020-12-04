@@ -10,7 +10,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CoreBehaviour } from '../../core';
+import { TCoreBehaviour } from '@app/core/model/TCoreBehaviour';
 
 @Component({
   selector: 'app-core-behaviour-detail',
@@ -19,10 +19,10 @@ import { CoreBehaviour } from '../../core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoreBehaviourDetailComponent implements OnChanges {
-  @Input() coreBehaviour: CoreBehaviour;
+  @Input() coreBehaviour: TCoreBehaviour;
   @Output() unselect = new EventEmitter<string>();
-  @Output() add = new EventEmitter<CoreBehaviour>();
-  @Output() update = new EventEmitter<CoreBehaviour>();
+  @Output() add = new EventEmitter<TCoreBehaviour>();
+  @Output() update = new EventEmitter<TCoreBehaviour>();
 
   @ViewChild('name', { static: true }) nameElement: ElementRef;
 

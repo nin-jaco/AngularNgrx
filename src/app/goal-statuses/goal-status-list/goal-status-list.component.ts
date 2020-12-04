@@ -6,7 +6,8 @@ import {
   Output
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { GoalStatus, ModalComponent } from '../../core';
+import { ModalComponent } from '@app/core';
+import { TGoalStatus } from '@app/core/model/TGoalStatus';
 
 @Component({
   selector: 'app-goal-status-list',
@@ -15,22 +16,22 @@ import { GoalStatus, ModalComponent } from '../../core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GoalStatusListComponent {
-  @Input() goalStatuses: GoalStatus[];
-  @Input() selectedGoalStatus: GoalStatus;
-  @Output() deleted = new EventEmitter<GoalStatus>();
-  @Output() selected = new EventEmitter<GoalStatus>();
+  @Input() goalStatuses: TGoalStatus[];
+  @Input() selectedGoalStatus: TGoalStatus;
+  @Output() deleted = new EventEmitter<TGoalStatus>();
+  @Output() selected = new EventEmitter<TGoalStatus>();
 
   constructor(public dialog: MatDialog) {}
 
-  byId(goalStatus: GoalStatus) {
+  byId(goalStatus: TGoalStatus) {
     return goalStatus.id;
   }
 
-  select(goalStatus: GoalStatus) {
+  select(goalStatus: TGoalStatus) {
     this.selected.emit(goalStatus);
   }
 
-  deleteGoalStatus(goalStatus: GoalStatus) {
+  deleteGoalStatus(goalStatus: TGoalStatus) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;

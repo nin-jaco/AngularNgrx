@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TNote } from '@app/core/model/TNote';
 import { finalize } from 'rxjs/operators';
-import { Note } from '../../core';
 import { NoteService } from '../note.service';
 
 @Component({
@@ -9,8 +9,8 @@ import { NoteService } from '../note.service';
   styleUrls: ['./notes.component.scss']
 })
 export class NotesComponent implements OnInit {
-  selected: Note;
-  notes: Note[];
+  selected: TNote;
+  notes: TNote[];
   loading: boolean;
 
   constructor(private noteService: NoteService) {}
@@ -19,7 +19,7 @@ export class NotesComponent implements OnInit {
     this.getNotes();
   }
 
-  add(note: Note) {
+  add(note: TNote) {
     this.loading = true;
     this.noteService
       .add(note)
@@ -31,15 +31,13 @@ export class NotesComponent implements OnInit {
     this.selected = null;
   }
 
-  delete(note: Note) {
+  delete(note: TNote) {
     this.loading = true;
     this.close();
     this.noteService
       .delete(note)
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe(
-        () => (this.notes = this.notes.filter(h => h.id !== note.id))
-      );
+      .subscribe(() => (this.notes = this.notes.filter(h => h.id !== note.id)));
   }
 
   enableAddMode() {
@@ -55,18 +53,17 @@ export class NotesComponent implements OnInit {
     this.close();
   }
 
-  select(note: Note) {
+  select(note: TNote) {
     this.selected = note;
   }
 
-  update(note: Note) {
+  update(note: TNote) {
     this.loading = true;
     this.noteService
       .update(note)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
-        () =>
-          (this.notes = this.notes.map(h => (h.id === note.id ? note : h)))
+        () => (this.notes = this.notes.map(h => (h.id === note.id ? note : h)))
       );
   }
 }

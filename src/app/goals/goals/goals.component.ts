@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TGoal } from '@app/core/model/TGoal';
 import { finalize } from 'rxjs/operators';
-import { Goal } from '../../core';
 import { GoalService } from '../goal.service';
 
 @Component({
@@ -9,8 +9,8 @@ import { GoalService } from '../goal.service';
   styleUrls: ['./goals.component.scss']
 })
 export class GoalsComponent implements OnInit {
-  selected: Goal;
-  goals: Goal[];
+  selected: TGoal;
+  goals: TGoal[];
   loading: boolean;
 
   constructor(private goalService: GoalService) {}
@@ -19,7 +19,7 @@ export class GoalsComponent implements OnInit {
     this.getGoals();
   }
 
-  add(goal: Goal) {
+  add(goal: TGoal) {
     this.loading = true;
     this.goalService
       .add(goal)
@@ -31,15 +31,13 @@ export class GoalsComponent implements OnInit {
     this.selected = null;
   }
 
-  delete(goal: Goal) {
+  delete(goal: TGoal) {
     this.loading = true;
     this.close();
     this.goalService
       .delete(goal)
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe(
-        () => (this.goals = this.goals.filter(h => h.id !== goal.id))
-      );
+      .subscribe(() => (this.goals = this.goals.filter(h => h.id !== goal.id)));
   }
 
   enableAddMode() {
@@ -55,18 +53,17 @@ export class GoalsComponent implements OnInit {
     this.close();
   }
 
-  select(goal: Goal) {
+  select(goal: TGoal) {
     this.selected = goal;
   }
 
-  update(goal: Goal) {
+  update(goal: TGoal) {
     this.loading = true;
     this.goalService
       .update(goal)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
-        () =>
-          (this.goals = this.goals.map(h => (h.id === goal.id ? goal : h)))
+        () => (this.goals = this.goals.map(h => (h.id === goal.id ? goal : h)))
       );
   }
 }

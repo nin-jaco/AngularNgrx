@@ -6,7 +6,8 @@ import {
   Output
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { CoreBehaviour, ModalComponent } from '../../core';
+import { ModalComponent } from '@app/core';
+import { TCoreBehaviour } from '@app/core/model/TCoreBehaviour';
 
 @Component({
   selector: 'app-core-behaviour-list',
@@ -15,22 +16,22 @@ import { CoreBehaviour, ModalComponent } from '../../core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoreBehaviourListComponent {
-  @Input() coreBehaviours: CoreBehaviour[];
-  @Input() selectedCoreBehaviour: CoreBehaviour;
-  @Output() deleted = new EventEmitter<CoreBehaviour>();
-  @Output() selected = new EventEmitter<CoreBehaviour>();
+  @Input() coreBehaviours: TCoreBehaviour[];
+  @Input() selectedCoreBehaviour: TCoreBehaviour;
+  @Output() deleted = new EventEmitter<TCoreBehaviour>();
+  @Output() selected = new EventEmitter<TCoreBehaviour>();
 
   constructor(public dialog: MatDialog) {}
 
-  byId(coreBehaviour: CoreBehaviour) {
+  byId(coreBehaviour: TCoreBehaviour) {
     return coreBehaviour.id;
   }
 
-  select(coreBehaviour: CoreBehaviour) {
+  select(coreBehaviour: TCoreBehaviour) {
     this.selected.emit(coreBehaviour);
   }
 
-  deleteCoreBehaviour(coreBehaviour: CoreBehaviour) {
+  deleteCoreBehaviour(coreBehaviour: TCoreBehaviour) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;

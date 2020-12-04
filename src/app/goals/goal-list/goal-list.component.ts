@@ -6,7 +6,8 @@ import {
   Output
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Goal, ModalComponent } from '../../core';
+import { TGoal } from '@app/core/model/TGoal';
+import { ModalComponent } from '../../core';
 
 @Component({
   selector: 'app-goal-list',
@@ -15,29 +16,29 @@ import { Goal, ModalComponent } from '../../core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GoalListComponent {
-  @Input() goals: Goal[];
-  @Input() selectedGoal: Goal;
-  @Output() deleted = new EventEmitter<Goal>();
-  @Output() selected = new EventEmitter<Goal>();
+  @Input() goals: TGoal[];
+  @Input() selectedGoal: TGoal;
+  @Output() deleted = new EventEmitter<TGoal>();
+  @Output() selected = new EventEmitter<TGoal>();
 
   constructor(public dialog: MatDialog) {}
 
-  byId(goal: Goal) {
-    return goal.id;
+  byId(goal: TGoal) {
+    return goal.name;
   }
 
-  select(goal: Goal) {
+  select(goal: TGoal) {
     this.selected.emit(goal);
   }
 
-  deleteGoal(goal: Goal) {
+  deleteGoal(goal: TGoal) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '250px';
     dialogConfig.data = {
       title: 'Delete Goal',
-      message: `Do you want to delete ${goal.id}`
+      message: `Do you want to delete ${goal.name}`
     };
 
     const dialogRef = this.dialog.open(ModalComponent, dialogConfig);

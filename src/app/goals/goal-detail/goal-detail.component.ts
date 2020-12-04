@@ -10,7 +10,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Goal } from '../../core';
+import { TGoal } from '@app/core/model/TGoal';
 
 @Component({
   selector: 'app-goal-detail',
@@ -19,10 +19,10 @@ import { Goal } from '../../core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GoalDetailComponent implements OnChanges {
-  @Input() goal: Goal;
+  @Input() goal: TGoal;
   @Output() unselect = new EventEmitter<string>();
-  @Output() add = new EventEmitter<Goal>();
-  @Output() update = new EventEmitter<Goal>();
+  @Output() add = new EventEmitter<TGoal>();
+  @Output() update = new EventEmitter<TGoal>();
 
   @ViewChild('name', { static: true }) nameElement: ElementRef;
 

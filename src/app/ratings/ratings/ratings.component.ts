@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TRating } from '@app/core/model/TRating';
 import { finalize } from 'rxjs/operators';
-import { Rating } from '../../core';
 import { RatingService } from '../rating.service';
 
 @Component({
@@ -9,8 +9,8 @@ import { RatingService } from '../rating.service';
   styleUrls: ['./ratings.component.scss']
 })
 export class RatingsComponent implements OnInit {
-  selected: Rating;
-  ratings: Rating[];
+  selected: TRating;
+  ratings: TRating[];
   loading: boolean;
 
   constructor(private ratingService: RatingService) {}
@@ -19,19 +19,21 @@ export class RatingsComponent implements OnInit {
     this.getRatings();
   }
 
-  add(rating: Rating) {
+  add(rating: TRating) {
     this.loading = true;
     this.ratingService
       .add(rating)
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe(addedRating => (this.ratings = this.ratings.concat(addedRating)));
+      .subscribe(
+        addedRating => (this.ratings = this.ratings.concat(addedRating))
+      );
   }
 
   close() {
     this.selected = null;
   }
 
-  delete(rating: Rating) {
+  delete(rating: TRating) {
     this.loading = true;
     this.close();
     this.ratingService
@@ -55,18 +57,20 @@ export class RatingsComponent implements OnInit {
     this.close();
   }
 
-  select(rating: Rating) {
+  select(rating: TRating) {
     this.selected = rating;
   }
 
-  update(rating: Rating) {
+  update(rating: TRating) {
     this.loading = true;
     this.ratingService
       .update(rating)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         () =>
-          (this.ratings = this.ratings.map(h => (h.id === rating.id ? rating : h)))
+          (this.ratings = this.ratings.map(h =>
+            h.id === rating.id ? rating : h
+          ))
       );
   }
 }

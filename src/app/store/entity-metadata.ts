@@ -1,21 +1,18 @@
 import { EntityMetadataMap } from 'ngrx-data';
-import { CoreBehaviourComment, KpiComment } from '../core';
 
 const entityMetadata: EntityMetadataMap = {
-  CoreBehaviourComment: {},
-  CoreBehaviourType:{},
-  CoreBehaviour:{},
-  FileUpload:{},
-  GoalStatus:{},
-  Goal:{},
-  KpiComment:{},
-  Kpi:{},
-  Manager:{},
-  Note:{},
-  Period:{},
-  QuarterType:{},
-  Rating:{},
-  StatusType:{}
+  TComment: {},
+  TCoreBehaviour: {},
+  TCoreBehaviourTemplate: {},
+  TFileUpload: {},
+  TGoalStatus: {},
+  TGoal: {},
+  TKpiComment: {},
+  TKpi: {},
+  TUserWithManager: {},
+  TNote: {},
+  TRating: {},
+  TSetting: {}
 };
 
 // because the plural of "hero" is not "heros"

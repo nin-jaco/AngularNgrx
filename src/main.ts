@@ -3,7 +3,6 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
-import { AppDevModule } from './app/app-dev.module';
 
 import 'hammerjs';
 
@@ -12,6 +11,5 @@ if (environment.production) {
 }
 
 platformBrowserDynamic()
-  // .bootstrapModule(AppModule)
-  .bootstrapModule(AppDevModule)
+  .bootstrapModule(AppModule)
   .catch(err => console.log(err));

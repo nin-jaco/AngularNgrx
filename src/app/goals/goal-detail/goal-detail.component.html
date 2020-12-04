@@ -7,18 +7,94 @@
       <div class="editfields">
         <div [hidden]="addMode">
           <mat-form-field>
-            <input matInput formControlName="id" placeholder="id" #id readonly>
+            <input
+              matInput
+              formControlName="id"
+              placeholder="id"
+              #id
+              readonly
+            />
           </mat-form-field>
         </div>
         <div>
           <mat-form-field>
-            <input matInput formControlName="finalScore" placeholder="final score" #name (keyup.esc)="close()" (keyup.enter)="saveGoal(form)">
+            <input
+              matInput
+              formControlName="name"
+              placeholder="name"
+              #name
+              (keyup.esc)="close()"
+              (keyup.enter)="saveGoal(form)"
+            />
           </mat-form-field>
         </div>
-        
+        <div>
+          <mat-form-field>
+            <input
+              matInput
+              formControlName="finalScore"
+              placeholder="final score"
+              #name
+              (keyup.esc)="close()"
+              (keyup.enter)="saveGoal(form)"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input
+              matDatePicker
+              formControlName="startDate"
+              placeholder="start date"
+              #name
+              (keyup.esc)="close()"
+              (keyup.enter)="saveGoal(form)"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input
+              matDatePicker
+              formControlName="endDate"
+              placeholder="end date"
+              #name
+              (keyup.esc)="close()"
+              (keyup.enter)="saveGoal(form)"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input
+              matDatePicker
+              formControlName="reviewDate"
+              placeholder="review date"
+              #name
+              (keyup.esc)="close()"
+              (keyup.enter)="saveGoal(form)"
+            />
+          </mat-form-field>
+        </div>
       </div>
-      <button mat-raised-button color="accent" type="button" (click)="close()" matTooltip="Cancel all changes">Cancel</button>
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.pristine || form.invalid" matTooltip="Save all changes">Save</button>
+      <button
+        mat-raised-button
+        color="accent"
+        type="button"
+        (click)="close()"
+        matTooltip="Cancel all changes"
+      >
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.pristine || form.invalid"
+        matTooltip="Save all changes"
+      >
+        Save
+      </button>
     </form>
   </mat-card-content>
 </mat-card>

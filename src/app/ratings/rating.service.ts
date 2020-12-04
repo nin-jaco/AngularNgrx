@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { throwError as observableThrowError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { Rating, ToastService } from '../core';
+import { ToastService } from '../core';
+import { TRating } from '../core/model/TRating';
 // import { RatingesModule } from './ratinges.module';
 
 const api = 'https://localhost:44324/api';
@@ -23,12 +24,10 @@ export class RatingService {
   getAll() {
     const url = `${api}/hr/ratings`;
     const msg = 'Ratings retrieved successfully!';
-    return this.http
-      .get<Rating[]>(url)
-      .pipe(
-        tap(() => this.toastService.openSnackBar(msg, 'GET')),
-        catchError(this.handleError)
-      );
+    return this.http.get<TRating[]>(url).pipe(
+      tap(() => this.toastService.openSnackBar(msg, 'GET')),
+      catchError(this.handleError)
+    );
   }
 
   private handleError(res: HttpErrorResponse) {
@@ -36,32 +35,41 @@ export class RatingService {
     return observableThrowError(res.error || 'Server error');
   }
 
-  delete(rating: Rating) {
+  delete(rating: TRating) {
     return this.http
       .delete(`${api}/hr/ratings/${rating.id}`)
       .pipe(
         tap(() =>
-          this.toastService.openSnackBar(`Rating ${rating.description} deleted`, 'DELETE')
+          this.toastService.openSnackBar(
+            `Rating ${rating.description} deleted`,
+            'DELETE'
+          )
         )
       );
   }
 
-  add(rating: Rating) {
+  add(rating: TRating) {
     return this.http
-      .post<Rating>(`${api}/hr/ratings/`, rating)
+      .post<TRating>(`${api}/hr/ratings/`, rating)
       .pipe(
         tap(() =>
-          this.toastService.openSnackBar(`Rating ${rating.description} added`, 'POST')
+          this.toastService.openSnackBar(
+            `Rating ${rating.description} added`,
+            'POST'
+          )
         )
       );
   }
 
-  update(rating: Rating) {
+  update(rating: TRating) {
     return this.http
-      .put<Rating>(`${api}/hr/ratings/${rating.id}`, rating)
+      .put<TRating>(`${api}/hr/ratings/${rating.id}`, rating)
       .pipe(
         tap(() =>
-          this.toastService.openSnackBar(`Rating ${rating.description} updated`, 'PUT')
+          this.toastService.openSnackBar(
+            `Rating ${rating.description} updated`,
+            'PUT'
+          )
         )
       );
   }

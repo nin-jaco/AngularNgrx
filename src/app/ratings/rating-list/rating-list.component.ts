@@ -6,7 +6,8 @@ import {
   Output
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Rating, ModalComponent } from '../../core';
+import { TRating } from '@app/core/model/TRating';
+import { ModalComponent } from '../../core';
 
 @Component({
   selector: 'app-rating-list',
@@ -15,22 +16,22 @@ import { Rating, ModalComponent } from '../../core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RatingListComponent {
-  @Input() ratings: Rating[];
-  @Input() selectedRating: Rating;
-  @Output() deleted = new EventEmitter<Rating>();
-  @Output() selected = new EventEmitter<Rating>();
+  @Input() ratings: TRating[];
+  @Input() selectedRating: TRating;
+  @Output() deleted = new EventEmitter<TRating>();
+  @Output() selected = new EventEmitter<TRating>();
 
   constructor(public dialog: MatDialog) {}
 
-  byId(rating: Rating) {
+  byId(rating: TRating) {
     return rating.id;
   }
 
-  select(rating: Rating) {
+  select(rating: TRating) {
     this.selected.emit(rating);
   }
 
-  deleteRating(rating: Rating) {
+  deleteRating(rating: TRating) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;

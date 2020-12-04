@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TGoalStatus } from '@app/core/model/TGoalStatus';
 import { finalize } from 'rxjs/operators';
-import { GoalStatus } from '../../core';
 import { GoalStatusService } from '../goal-status.service';
 
 @Component({
@@ -9,8 +9,8 @@ import { GoalStatusService } from '../goal-status.service';
   styleUrls: ['./goal-statuses.component.scss']
 })
 export class GoalStatusesComponent implements OnInit {
-  selected: GoalStatus;
-  goalStatuses: GoalStatus[];
+  selected: TGoalStatus;
+  goalStatuses: TGoalStatus[];
   loading: boolean;
 
   constructor(private goalStatusService: GoalStatusService) {}
@@ -19,26 +19,32 @@ export class GoalStatusesComponent implements OnInit {
     this.getGoalStatuses();
   }
 
-  add(goalStatus: GoalStatus) {
+  add(goalStatus: TGoalStatus) {
     this.loading = true;
     this.goalStatusService
       .add(goalStatus)
       .pipe(finalize(() => (this.loading = false)))
-      .subscribe(addedGoalStatus => (this.goalStatuses = this.goalStatuses.concat(addedGoalStatus)));
+      .subscribe(
+        addedGoalStatus =>
+          (this.goalStatuses = this.goalStatuses.concat(addedGoalStatus))
+      );
   }
 
   close() {
     this.selected = null;
   }
 
-  delete(goalStatus: GoalStatus) {
+  delete(goalStatus: TGoalStatus) {
     this.loading = true;
     this.close();
     this.goalStatusService
       .delete(goalStatus)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
-        () => (this.goalStatuses = this.goalStatuses.filter(h => h.id !== goalStatus.id))
+        () =>
+          (this.goalStatuses = this.goalStatuses.filter(
+            h => h.id !== goalStatus.id
+          ))
       );
   }
 
@@ -55,18 +61,20 @@ export class GoalStatusesComponent implements OnInit {
     this.close();
   }
 
-  select(goalStatus: GoalStatus) {
+  select(goalStatus: TGoalStatus) {
     this.selected = goalStatus;
   }
 
-  update(goalStatus: GoalStatus) {
+  update(goalStatus: TGoalStatus) {
     this.loading = true;
     this.goalStatusService
       .update(goalStatus)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         () =>
-          (this.goalStatuses = this.goalStatuses.map(h => (h.id === goalStatus.id ? goalStatus : h)))
+          (this.goalStatuses = this.goalStatuses.map(h =>
+            h.id === goalStatus.id ? goalStatus : h
+          ))
       );
   }
 }

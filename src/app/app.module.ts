@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { CoreModule } from './core';
+import { CoreModule } from './core/core.module';
 import { AppStoreModule } from './store/app-store.module';
 
 const routes: Routes = [
@@ -12,22 +12,17 @@ const routes: Routes = [
   {
     path: 'corebehaviours',
     loadChildren: () =>
-      import('./core-behaviours/core-behaviours.module').then(m => m.CoreBehavioursModule)
+      import('./core-behaviours/core-behaviours.module').then(
+        m => m.CoreBehavioursModule
+      )
   },
   {
     path: 'notes',
-    loadChildren: () =>
-      import('./notes/notes.module').then(m => m.NotesModule)
-  },
-  {
-    path: 'periods',
-    loadChildren: () =>
-      import('./periods/periods.module').then(m => m.PeriodsModule)
+    loadChildren: () => import('./notes/notes.module').then(m => m.NotesModule)
   },
   {
     path: 'goals',
-    loadChildren: () =>
-      import('./goals/goals.module').then(m => m.GoalsModule)
+    loadChildren: () => import('./goals/goals.module').then(m => m.GoalsModule)
   }
 ];
 
